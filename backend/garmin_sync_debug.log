@@ -1,0 +1,12 @@
+
+--- SYNC START stefano.bonfanti@libero.it @ 2025-12-24 11:55:34.761270 ---
+DEBUG: HR Zones fetch error: 'Garmin' object has no attribute 'get_hr_zones'
+FINAL RESULT SENT: {'hr_max': 185, 'hr_rest': 51, 'vo2_max_run': None, 'vo2_max_cycle': None, 'ftp': None, 'running_threshold': None}
+
+--- SYNC START stefano.bonfanti@libero.it @ 2025-12-24 11:59:11.335122 ---
+DEBUG: HR Zones fetch error: 'Garmin' object has no attribute 'get_hr_zones'
+FINAL RESULT SENT: {'hr_max': 185, 'hr_rest': 51, 'vo2_max_run': None, 'vo2_max_cycle': None, 'ftp': None, 'running_threshold': None}
+
+--- SYNC START stefano.bonfanti@libero.it @ 2025-12-24 12:01:18.574940 ---
+DEBUG: HR Zones fetch error: 'Garmin' object has no attribute 'get_hr_zones'
+FINAL RESULT SENT: {'hr_max': 185, 'hr_rest': 51, 'vo2_max_run': None, 'vo2_max_cycle': None, 'ftp': None, 'running_threshold': None}

@@ -1,0 +1,300 @@
+2025-12-29 17:17:59.678433 - Error in pure dict workout creation: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+Traceback (most recent call last):
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 146, in request
+    self.last_resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 178, in create_and_schedule_workout
+    workout_response = self.client.upload_workout(payload)
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garminconnect\__init__.py", line 2320, in upload_workout
+    return self.garth.post("connectapi", url, json=payload, api=True).json()
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 158, in post
+    return self.request("POST", *args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 148, in request
+    raise GarthHTTPError(
+    ...<2 lines>...
+    )
+garth.exc.GarthHTTPError: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+2025-12-29 17:18:00.196592 - Error in pure dict workout creation: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+Traceback (most recent call last):
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 146, in request
+    self.last_resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 178, in create_and_schedule_workout
+    workout_response = self.client.upload_workout(payload)
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garminconnect\__init__.py", line 2320, in upload_workout
+    return self.garth.post("connectapi", url, json=payload, api=True).json()
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 158, in post
+    return self.request("POST", *args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 148, in request
+    raise GarthHTTPError(
+    ...<2 lines>...
+    )
+garth.exc.GarthHTTPError: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+2025-12-29 17:19:41.351439 - Error in pure dict workout creation: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+Traceback (most recent call last):
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 146, in request
+    self.last_resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 178, in create_and_schedule_workout
+    workout_response = self.client.upload_workout(payload)
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garminconnect\__init__.py", line 2320, in upload_workout
+    return self.garth.post("connectapi", url, json=payload, api=True).json()
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 158, in post
+    return self.request("POST", *args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 148, in request
+    raise GarthHTTPError(
+    ...<2 lines>...
+    )
+garth.exc.GarthHTTPError: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+2025-12-29 17:19:41.865693 - Error in pure dict workout creation: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+Traceback (most recent call last):
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 146, in request
+    self.last_resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 178, in create_and_schedule_workout
+    workout_response = self.client.upload_workout(payload)
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garminconnect\__init__.py", line 2320, in upload_workout
+    return self.garth.post("connectapi", url, json=payload, api=True).json()
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 158, in post
+    return self.request("POST", *args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 148, in request
+    raise GarthHTTPError(
+    ...<2 lines>...
+    )
+garth.exc.GarthHTTPError: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+2025-12-29 17:25:55.293353 - Error in pure dict workout creation: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+Traceback (most recent call last):
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 146, in request
+    self.last_resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 180, in create_and_schedule_workout
+    workout_response = self.client.upload_workout(payload)
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garminconnect\__init__.py", line 2320, in upload_workout
+    return self.garth.post("connectapi", url, json=payload, api=True).json()
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 158, in post
+    return self.request("POST", *args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 148, in request
+    raise GarthHTTPError(
+    ...<2 lines>...
+    )
+garth.exc.GarthHTTPError: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+2025-12-29 17:25:56.063663 - Error in pure dict workout creation: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+Traceback (most recent call last):
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 146, in request
+    self.last_resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 180, in create_and_schedule_workout
+    workout_response = self.client.upload_workout(payload)
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garminconnect\__init__.py", line 2320, in upload_workout
+    return self.garth.post("connectapi", url, json=payload, api=True).json()
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 158, in post
+    return self.request("POST", *args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 148, in request
+    raise GarthHTTPError(
+    ...<2 lines>...
+    )
+garth.exc.GarthHTTPError: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+2025-12-29 17:29:27.202708 - Error in pure dict workout creation: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+Traceback (most recent call last):
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 146, in request
+    self.last_resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 177, in create_and_schedule_workout
+    workout_response = self.client.upload_workout(payload)
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garminconnect\__init__.py", line 2320, in upload_workout
+    return self.garth.post("connectapi", url, json=payload, api=True).json()
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 158, in post
+    return self.request("POST", *args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 148, in request
+    raise GarthHTTPError(
+    ...<2 lines>...
+    )
+garth.exc.GarthHTTPError: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+2025-12-29 17:29:27.723465 - Error in pure dict workout creation: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+Traceback (most recent call last):
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 146, in request
+    self.last_resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 177, in create_and_schedule_workout
+    workout_response = self.client.upload_workout(payload)
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garminconnect\__init__.py", line 2320, in upload_workout
+    return self.garth.post("connectapi", url, json=payload, api=True).json()
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 158, in post
+    return self.request("POST", *args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 148, in request
+    raise GarthHTTPError(
+    ...<2 lines>...
+    )
+garth.exc.GarthHTTPError: Error in request: 500 Server Error: Internal Server Error for url: https://connectapi.garmin.com/workout-service/workout
+2025-12-30 09:52:50.178509 - Error in pure dict workout creation: Error in request: 400 Client Error: Bad Request for url: https://connectapi.garmin.com/workout-service/workout
+Traceback (most recent call last):
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 146, in request
+    self.last_resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://connectapi.garmin.com/workout-service/workout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 205, in create_and_schedule_workout
+    workout_response = self.client.upload_workout(payload)
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garminconnect\__init__.py", line 2320, in upload_workout
+    return self.garth.post("connectapi", url, json=payload, api=True).json()
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 158, in post
+    return self.request("POST", *args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 148, in request
+    raise GarthHTTPError(
+    ...<2 lines>...
+    )
+garth.exc.GarthHTTPError: Error in request: 400 Client Error: Bad Request for url: https://connectapi.garmin.com/workout-service/workout
+2025-12-30 09:53:10.165184 - Error in pure dict workout creation: Error in request: 400 Client Error: Bad Request for url: https://connectapi.garmin.com/workout-service/workout
+Traceback (most recent call last):
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 146, in request
+    self.last_resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://connectapi.garmin.com/workout-service/workout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 205, in create_and_schedule_workout
+    workout_response = self.client.upload_workout(payload)
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garminconnect\__init__.py", line 2320, in upload_workout
+    return self.garth.post("connectapi", url, json=payload, api=True).json()
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 158, in post
+    return self.request("POST", *args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 148, in request
+    raise GarthHTTPError(
+    ...<2 lines>...
+    )
+garth.exc.GarthHTTPError: Error in request: 400 Client Error: Bad Request for url: https://connectapi.garmin.com/workout-service/workout
+2025-12-30 10:05:01.343749 - Error in pure dict workout creation: Error in request: 400 Client Error: Bad Request for url: https://connectapi.garmin.com/workout-service/workout
+Traceback (most recent call last):
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 146, in request
+    self.last_resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://connectapi.garmin.com/workout-service/workout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 204, in create_and_schedule_workout
+    workout_response = self.client.upload_workout(payload)
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garminconnect\__init__.py", line 2320, in upload_workout
+    return self.garth.post("connectapi", url, json=payload, api=True).json()
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 158, in post
+    return self.request("POST", *args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 148, in request
+    raise GarthHTTPError(
+    ...<2 lines>...
+    )
+garth.exc.GarthHTTPError: Error in request: 400 Client Error: Bad Request for url: https://connectapi.garmin.com/workout-service/workout
+2025-12-30 10:05:54.392572 - Error in pure dict workout creation: Error in request: 400 Client Error: Bad Request for url: https://connectapi.garmin.com/workout-service/workout
+Traceback (most recent call last):
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 146, in request
+    self.last_resp.raise_for_status()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\requests\models.py", line 1026, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://connectapi.garmin.com/workout-service/workout
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 204, in create_and_schedule_workout
+    workout_response = self.client.upload_workout(payload)
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garminconnect\__init__.py", line 2320, in upload_workout
+    return self.garth.post("connectapi", url, json=payload, api=True).json()
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 158, in post
+    return self.request("POST", *args, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\s.bonfanti\AppData\Roaming\Python\Python313\site-packages\garth\http.py", line 148, in request
+    raise GarthHTTPError(
+    ...<2 lines>...
+    )
+garth.exc.GarthHTTPError: Error in request: 400 Client Error: Bad Request for url: https://connectapi.garmin.com/workout-service/workout
