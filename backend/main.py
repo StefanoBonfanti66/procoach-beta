@@ -68,10 +68,12 @@ async def sync_metrics(credentials: Dict[str, str], db: Session = Depends(get_db
     metrics = gm.get_performance_metrics()
     
     if not metrics:
-        raise HTTPException(status_code=400, detail="Failed to sync with Garmin")
+        print("WARNING: Sync failed during onboarding, but proceeding to allow user creation.")
+        return {"status": "partial_success", "metrics": {}, "warning": "Garmin sync skipped"}
     
     if isinstance(metrics, dict) and "error" in metrics:
-        raise HTTPException(status_code=401, detail=metrics["error"])
+        print(f"WARNING: Garmin login error: {metrics['error']}. Proceeding anyway.")
+        return {"status": "partial_success", "metrics": {}, "warning": metrics["error"]}
         
     return {"status": "success", "metrics": metrics}
 
