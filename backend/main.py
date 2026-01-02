@@ -62,10 +62,19 @@ async def root():
 @app.post("/user/sync-metrics")
 async def sync_metrics(credentials: Dict[str, str], db: Session = Depends(get_db)):
     print(f"DEBUG: Sync request received for {credentials.get('email')}")
-    from garmin_sync import GarminManager
     
-    gm = GarminManager(credentials['email'], credentials['password'])
+    # Try to find existing tokens
+    db_user = db.query(User).filter(User.email == credentials.get('email')).first()
+    tokens = db_user.garmin_tokens if db_user else None
+    
+    from garmin_sync import GarminManager
+    gm = GarminManager(credentials['email'], credentials['password'], tokens=tokens)
     metrics = gm.get_performance_metrics()
+    
+    # Save tokens to help Cloud instance
+    if gm.get_session_tokens() and db_user:
+        db_user.garmin_tokens = gm.get_session_tokens()
+        db.commit()
     
     if not metrics:
         print("WARNING: Sync failed during onboarding, but proceeding to allow user creation.")
@@ -171,8 +180,13 @@ async def get_training_stats(email: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="User credentials not found")
         
     from garmin_sync import GarminManager
-    gm = GarminManager(db_user.email, db_user.hashed_password)
+    gm = GarminManager(db_user.email, db_user.hashed_password, tokens=db_user.garmin_tokens)
     stats = gm.get_training_stats(days=30)
+    
+    # Save tokens to persist session
+    if gm.get_session_tokens():
+        db_user.garmin_tokens = gm.get_session_tokens()
+        db.commit()
     
     if not stats:
         raise HTTPException(status_code=500, detail="Failed to calculate training stats")

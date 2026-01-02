@@ -47,6 +47,7 @@ class User(Base):
     availability = Column(JSON)
     habits = Column(JSON)
     pool_length = Column(Float, default=25.0)
+    garmin_tokens = Column(JSON) # To store session tokens (bypassing login)
 
 Base.metadata.create_all(bind=engine)
 

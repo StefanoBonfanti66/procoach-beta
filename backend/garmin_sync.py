@@ -8,15 +8,27 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class GarminManager:
-    def __init__(self, email, password):
+    def __init__(self, email, password, tokens=None):
         self.email = email
         self.password = password
+        self.tokens = tokens
         self.client = None
         
     def login(self):
         try:
             print(f"DEBUG: Attempting Garmin login for {self.email}...")
             self.client = Garmin(self.email, self.password)
+            
+            # 1. Try to load session from tokens
+            if self.tokens:
+                try:
+                    self.client.garth.loads(self.tokens)
+                    print("DEBUG: Session loaded from stored tokens.")
+                    return True
+                except Exception as token_err:
+                    print(f"DEBUG: Token login failed ({token_err}). Falling back to password.")
+            
+            # 2. Standard Login
             self.client.login()
             logger.info("Garmin login successful")
             return True
@@ -28,6 +40,11 @@ class GarminManager:
                     f.write(f"{datetime.datetime.now()} - {msg}\n")
             except: pass
             return False
+
+    def get_session_tokens(self):
+        if self.client and hasattr(self.client, 'garth'):
+            return self.client.garth.dumps()
+        return None
 
     def create_and_schedule_workout(self, name, description, duration_min, date_str, activity_type="RUNNING", steps=None, pool_length=25.0):
         """Creates a workout using pure JSON/Dict structure to avoid Object validation issues."""
