@@ -238,7 +238,7 @@ Quando l'atleta chiede ANALISI PERFORMANCE, fornisci:
 - Prossimi passi
 
 ═══════════════════════════════════════════════════════════
-Ricorda: Sei qui per aiutare {user_profile.get('name', 'l\'atleta')} a raggiungere il suo obiettivo.
+Ricorda: Sei qui per aiutare {user_profile.get('name', "l'atleta")} a raggiungere il suo obiettivo.
 Sii il coach che vorresti avere! 💪
 ═══════════════════════════════════════════════════════════
 """
