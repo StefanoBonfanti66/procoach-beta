@@ -34,13 +34,13 @@ async def validation_exception_handler(request, exc):
         content={"detail": exc.errors(), "body": str(await request.body())},
     )
 
-# Ensure tables are created on startup (useful for Render/Supabase)
+# Ensure tables are created and migrated on startup (useful for Render/Supabase)
 try:
-    from database import Base, engine
-    Base.metadata.create_all(bind=engine)
-    print("Database tables verified/created.")
+    from database import Base, engine, migrate_db
+    migrate_db()
+    print("Database tables verified/migrated.")
 except Exception as e:
-    print(f"DB INITIALIZATION ERROR: {e}")
+    print(f"DB INITIALIZATION/MIGRATION ERROR: {e}")
 
 from pydantic import BaseModel, Field, ConfigDict
 

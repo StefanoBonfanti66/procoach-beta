@@ -95,6 +95,53 @@ class ChatMessage(Base):
 
 Base.metadata.create_all(bind=engine)
 
+
+def migrate_db():
+    """Simple migration tool to add missing columns without Alembic"""
+    from sqlalchemy import inspect, text
+    inspector = inspect(engine)
+    
+    # Check User table columns
+    columns = [c['name'] for c in inspector.get_columns('users')]
+    
+    # List of columns that might be missing from older versions
+    required_shifts = {
+        "experience_level": "ALTER TABLE users ADD COLUMN experience_level VARCHAR",
+        "primary_objective": "ALTER TABLE users ADD COLUMN primary_objective VARCHAR",
+        "race_distance": "ALTER TABLE users ADD COLUMN race_distance VARCHAR",
+        "race_date": "ALTER TABLE users ADD COLUMN race_date VARCHAR",
+        "race_time_goal": "ALTER TABLE users ADD COLUMN race_time_goal VARCHAR",
+        "hr_rest": "ALTER TABLE users ADD COLUMN hr_rest INTEGER DEFAULT 60",
+        "hr_max": "ALTER TABLE users ADD COLUMN hr_max INTEGER DEFAULT 190",
+        "ftp": "ALTER TABLE users ADD COLUMN ftp INTEGER DEFAULT 200",
+        "vo2_max_run": "ALTER TABLE users ADD COLUMN vo2_max_run FLOAT",
+        "vo2_max_cycle": "ALTER TABLE users ADD COLUMN vo2_max_cycle FLOAT",
+        "css": "ALTER TABLE users ADD COLUMN css VARCHAR",
+        "running_threshold": "ALTER TABLE users ADD COLUMN running_threshold VARCHAR",
+        "hr_max_cycle": "ALTER TABLE users ADD COLUMN hr_max_cycle INTEGER",
+        "hr_max_swim": "ALTER TABLE users ADD COLUMN hr_max_swim INTEGER",
+        "lactate_threshold_hr": "ALTER TABLE users ADD COLUMN lactate_threshold_hr INTEGER",
+        "gender": "ALTER TABLE users ADD COLUMN gender VARCHAR",
+        "birthdate": "ALTER TABLE users ADD COLUMN birthdate VARCHAR",
+        "availability": f"ALTER TABLE users ADD COLUMN availability {'JSON' if not SQLALCHEMY_DATABASE_URL.startswith('sqlite') else 'TEXT'}",
+        "habits": f"ALTER TABLE users ADD COLUMN habits {'JSON' if not SQLALCHEMY_DATABASE_URL.startswith('sqlite') else 'TEXT'}",
+        "pool_length": "ALTER TABLE users ADD COLUMN pool_length FLOAT DEFAULT 25.0",
+        "garmin_tokens": f"ALTER TABLE users ADD COLUMN garmin_tokens {'JSON' if not SQLALCHEMY_DATABASE_URL.startswith('sqlite') else 'TEXT'}"
+    }
+
+    with engine.connect() as conn:
+        for col_name, alter_cmd in required_shifts.items():
+            if col_name not in columns:
+                print(f"MIGRATION: Adding missing column {col_name} to users table...")
+                try:
+                    conn.execute(text(alter_cmd))
+                    conn.commit()
+                except Exception as e:
+                    print(f"MIGRATION WARNING: Could not add {col_name}: {e}")
+        
+        # Ensure new tables are created as well
+        Base.metadata.create_all(bind=engine)
+
 def get_db():
     db = SessionLocal()
     try:
