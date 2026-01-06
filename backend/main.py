@@ -34,6 +34,14 @@ async def validation_exception_handler(request, exc):
         content={"detail": exc.errors(), "body": str(await request.body())},
     )
 
+# Ensure tables are created on startup (useful for Render/Supabase)
+try:
+    from database import Base, engine
+    Base.metadata.create_all(bind=engine)
+    print("Database tables verified/created.")
+except Exception as e:
+    print(f"DB INITIALIZATION ERROR: {e}")
+
 from pydantic import BaseModel, Field, ConfigDict
 
 class UserProfileSchema(BaseModel):
@@ -102,7 +110,11 @@ async def sync_metrics(credentials: Dict[str, str], db: Session = Depends(get_db
         print(f"CRITICAL SYNC ERROR: {e}")
         import traceback
         traceback.print_exc()
-        return JSONResponse(status_code=500, content={"detail": f"Server Error: {str(e)}"})
+        # Return the actual error message to the frontend for easy beta debugging
+        return JSONResponse(status_code=500, content={
+            "detail": f"Errore Server (Beta): {str(e)}",
+            "type": type(e).__name__
+        })
 
 @app.post("/api/user/profile")
 async def update_profile(profile: UserProfileSchema, db: Session = Depends(get_db)):
