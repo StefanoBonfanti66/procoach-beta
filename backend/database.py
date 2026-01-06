@@ -49,6 +49,50 @@ class User(Base):
     pool_length = Column(Float, default=25.0)
     garmin_tokens = Column(JSON) # To store session tokens (bypassing login)
 
+class Challenge(Base):
+    __tablename__ = "challenges"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    description = Column(String)
+    category = Column(String) # 'consistency', 'performance', 'volume'
+    challenge_type = Column(String) # 'weekly', 'monthly', 'checkpoint'
+    metric = Column(String) # 'sessions', 'tss', 'distance', 'pace', 'power'
+    target_value = Column(Float)
+    badge_icon = Column(String) # Lucide icon name or URL
+    xp_reward = Column(Integer, default=100)
+
+class UserChallenge(Base):
+    __tablename__ = "user_challenges"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_email = Column(String, index=True)
+    challenge_id = Column(Integer)
+    current_value = Column(Float, default=0.0)
+    status = Column(String, default="active") # 'active', 'completed', 'expired'
+    start_date = Column(String)
+    end_date = Column(String)
+    is_notified = Column(Integer, default=0) # Boolean if user saw the completion
+
+class PerformanceHistory(Base):
+    __tablename__ = "performance_history"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_email = Column(String, index=True)
+    metric_type = Column(String) # 'ftp', 'css', 'run_pace', 'hr_rest'
+    value = Column(Float)
+    recorded_at = Column(String) # ISO date string
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_email = Column(String, index=True)
+    role = Column(String) # 'user' or 'assistant'
+    content = Column(String)
+    timestamp = Column(String)
+    msg_metadata = Column(JSON) # For storing context, actions taken, etc.
+
 Base.metadata.create_all(bind=engine)
 
 def get_db():

@@ -8731,3 +8731,2302 @@
   "poolLength": null,
   "poolLengthUnit": null
 }
+
+--- 3 x 5 min a 11.5 km/h (1.0% incl) con 3 min recupero, focus su cadenza >170 spm. (RUNNING) ---
+{
+  "workoutName": "3 x 5 min a 11.5 km/h (1.0% incl) con 3 min recupero, focus su cadenza >170 spm.",
+  "description": "3 x 5 min a 11.5 km/h (1.0% incl) con 3 min recupero, focus su cadenza >170 spm.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Main Part",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 2580.0
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 2580,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 3 x 5 min a 11.5 km/h (1.0% incl) con 3 min recupero, focus su cadenza >170 spm. (RUNNING) ---
+{
+  "workoutName": "3 x 5 min a 11.5 km/h (1.0% incl) con 3 min recupero, focus su cadenza >170 spm.",
+  "description": "3 x 5 min a 11.5 km/h (1.0% incl) con 3 min recupero, focus su cadenza >170 spm.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Main Part",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 2580.0
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 2580,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 3 x 5 min a 11.5 km/h (1.0% incl) con 3 min recupero, focus su cadenza >170 spm. (RUNNING) ---
+{
+  "workoutName": "3 x 5 min a 11.5 km/h (1.0% incl) con 3 min recupero, focus su cadenza >170 spm.",
+  "description": "3 x 5 min a 11.5 km/h (1.0% incl) con 3 min recupero, focus su cadenza >170 spm.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Main Part",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 2580.0
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 2580,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 4x (1 min @ 13.0 km/h / 2 min rec @ 8.0 km/h) con focus su cadenza >170 spm. (RUNNING) ---
+{
+  "workoutName": "4x (1 min @ 13.0 km/h / 2 min rec @ 8.0 km/h) con focus su cadenza >170 spm.",
+  "description": "4x (1 min @ 13.0 km/h / 2 min rec @ 8.0 km/h) con focus su cadenza >170 spm.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento incrementale (9.0 -> 10.0 km/h) a 1.0% inclinazione.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 480.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Lavoro intenso sopra soglia",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 60.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale (9.0 -> 7.0 km/h), riduzione inclinazione.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 1140,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 4x (1 min @ 13.0 km/h / 2 min rec @ 8.0 km/h) con focus su cadenza >170 spm. (RUNNING) ---
+{
+  "workoutName": "4x (1 min @ 13.0 km/h / 2 min rec @ 8.0 km/h) con focus su cadenza >170 spm.",
+  "description": "4x (1 min @ 13.0 km/h / 2 min rec @ 8.0 km/h) con focus su cadenza >170 spm.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento incrementale (9.0 -> 10.0 km/h) a 1.0% inclinazione.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 480.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Lavoro intenso sopra soglia",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 60.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale (9.0 -> 7.0 km/h), riduzione inclinazione.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 1140,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- Foundation Run (RUNNING) ---
+{
+  "workoutName": "Foundation Run",
+  "description": "AI Workout",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento 12\u2032",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 720.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 2.045,
+          "targetValueTwo": 2.26
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Fartlek Play",
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 9,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "2\u2032 Moderate",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 120.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 2.674,
+              "targetValueTwo": 2.955
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "2\u2032 Easy",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 120.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 2.202,
+              "targetValueTwo": 2.434
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 9.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento 9\u2032",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 540.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 1.887,
+          "targetValueTwo": 2.086
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 3420,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 3x5 min a passo soglia (5:00/km o 12.0 km/h) sul tapis roulant XT800, con inclinazione 1.0% sul lavoro. (RUNNING) ---
+{
+  "workoutName": "3x5 min a passo soglia (5:00/km o 12.0 km/h) sul tapis roulant XT800, con inclinazione 1.0% sul lavoro.",
+  "description": "3x5 min a passo soglia (5:00/km o 12.0 km/h) sul tapis roulant XT800, con inclinazione 1.0% sul lavoro.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento graduale, 9.0 -> 10.5 km/h a 1.0%.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": null,
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 3,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Lavoro Soglia (Z4)",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 300.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "Recupero attivo Z1",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 120.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 3.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale, 8.0 -> 7.0 km/h a 0.0%.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 300.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 2160,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 6x (1 min @ 13.5 km/h / 1 min rec @ 8.0 km/h) con focus su cadenza >170 spm, sul tapis roulant XT800. (RUNNING) ---
+{
+  "workoutName": "6x (1 min @ 13.5 km/h / 1 min rec @ 8.0 km/h) con focus su cadenza >170 spm, sul tapis roulant XT800.",
+  "description": "6x (1 min @ 13.5 km/h / 1 min rec @ 8.0 km/h) con focus su cadenza >170 spm, sul tapis roulant XT800.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento graduale, 9.0 -> 10.5 km/h a 1.0%.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 480.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": null,
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 6,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Lavoro VO2 Max",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "Recupero attivo Z1",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 6.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale, 9.0 -> 7.0 km/h a 0.0%.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 1800,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 6x (1 min @ 13.5 km/h / 1 min rec @ 8.0 km/h) con focus su cadenza >170 spm, sul tapis roulant XT800. (RUNNING) ---
+{
+  "workoutName": "6x (1 min @ 13.5 km/h / 1 min rec @ 8.0 km/h) con focus su cadenza >170 spm, sul tapis roulant XT800.",
+  "description": "6x (1 min @ 13.5 km/h / 1 min rec @ 8.0 km/h) con focus su cadenza >170 spm, sul tapis roulant XT800.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento graduale, 9.0 -> 10.5 km/h a 1.0%.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 480.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": null,
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 6,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Lavoro VO2 Max",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "Recupero attivo Z1",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 6.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale, 9.0 -> 7.0 km/h a 0.0%.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 1800,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 6x (1 min @ 13.5 km/h / 1 min rec @ 8.0 km/h) con focus su cadenza >170 spm, sul tapis roulant XT800. (RUNNING) ---
+{
+  "workoutName": "6x (1 min @ 13.5 km/h / 1 min rec @ 8.0 km/h) con focus su cadenza >170 spm, sul tapis roulant XT800.",
+  "description": "6x (1 min @ 13.5 km/h / 1 min rec @ 8.0 km/h) con focus su cadenza >170 spm, sul tapis roulant XT800.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento graduale, 9.0 -> 10.5 km/h a 1.0%.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 480.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": null,
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 6,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Lavoro VO2 Max",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "Recupero attivo Z1",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 6.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale, 9.0 -> 7.0 km/h a 0.0%.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 1800,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 6x (1 min @ 13.5 km/h / 1 min rec @ 8.0 km/h) con focus su cadenza >170 spm, sul tapis roulant XT800. (RUNNING) ---
+{
+  "workoutName": "6x (1 min @ 13.5 km/h / 1 min rec @ 8.0 km/h) con focus su cadenza >170 spm, sul tapis roulant XT800.",
+  "description": "6x (1 min @ 13.5 km/h / 1 min rec @ 8.0 km/h) con focus su cadenza >170 spm, sul tapis roulant XT800.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento graduale, 9.0 -> 10.5 km/h a 1.0%.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 480.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": null,
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 6,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Lavoro VO2 Max",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "Recupero attivo Z1",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 6.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale, 9.0 -> 7.0 km/h a 0.0%.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 1800,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 6x (1 min @ 5:45/km / 1 min rec) per affinare il ritmo e l'efficienza Z2/Z3. (RUNNING) ---
+{
+  "workoutName": "6x (1 min @ 5:45/km / 1 min rec) per affinare il ritmo e l'efficienza Z2/Z3.",
+  "description": "6x (1 min @ 5:45/km / 1 min rec) per affinare il ritmo e l'efficienza Z2/Z3.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento graduale, 9.0 -> 10.0 km/h a 1.0%.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 480.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": null,
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 6,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Lavoro Efficienza",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "Recupero attivo Z1",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 6.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale, 9.0 -> 7.0 km/h a 0.0%.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 1800,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 4x (1 min @ 13.3 km/h / 1 min rec @ 8.0 km/h) per VO2 Max. Sfrutta ogni secondo! (RUNNING) ---
+{
+  "workoutName": "4x (1 min @ 13.3 km/h / 1 min rec @ 8.0 km/h) per VO2 Max. Sfrutta ogni secondo!",
+  "description": "4x (1 min @ 13.3 km/h / 1 min rec @ 8.0 km/h) per VO2 Max. Sfrutta ogni secondo!",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento graduale, 9.0 -> 10.0 km/h a 1.0%.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 300.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": null,
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 4,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Lavoro VO2 Max",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "Recupero attivo Z1",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 4.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale, 10.0 -> 7.0 km/h a 0.0%.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 420.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 1200,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 4x (2 min @ 12.4 km/h / 1 min rec @ 8.0 km/h). Focus primario sull'aumento della cadenza (>170 spm). (RUNNING) ---
+{
+  "workoutName": "4x (2 min @ 12.4 km/h / 1 min rec @ 8.0 km/h). Focus primario sull'aumento della cadenza (>170 spm).",
+  "description": "4x (2 min @ 12.4 km/h / 1 min rec @ 8.0 km/h). Focus primario sull'aumento della cadenza (>170 spm).",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento graduale, 9.0 -> 10.5 km/h a 1.0%.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 480.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": null,
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 4,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Lavoro Soglia Z4",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 120.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "Recupero attivo Z1",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 4.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale, 10.0 -> 7.0 km/h a 0.0%.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 1800,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- Foundation Run (RUNNING) ---
+{
+  "workoutName": "Foundation Run",
+  "description": "AI Workout",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento 12\u2032",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 720.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 2.045,
+          "targetValueTwo": 2.26
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Fartlek Play",
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 9,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "2\u2032 Moderate",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 120.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 2.674,
+              "targetValueTwo": 2.955
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "2\u2032 Easy",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 120.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 2.202,
+              "targetValueTwo": 2.434
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 9.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento 9\u2032",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 540.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 1.887,
+          "targetValueTwo": 2.086
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 3420,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 3x (3 min @ 12.0 km/h / 1 min rec @ 8.0 km/h). Focus primario su cadenza alta e sostenere il ritmo soglia. (RUNNING) ---
+{
+  "workoutName": "3x (3 min @ 12.0 km/h / 1 min rec @ 8.0 km/h). Focus primario su cadenza alta e sostenere il ritmo soglia.",
+  "description": "3x (3 min @ 12.0 km/h / 1 min rec @ 8.0 km/h). Focus primario su cadenza alta e sostenere il ritmo soglia.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento graduale, 9.0 -> 10.5 km/h a 1.0%.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 480.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": null,
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 3,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Lavoro Soglia (5:00/km)",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 180.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 3.167,
+              "targetValueTwo": 3.5
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "Recupero attivo Z1",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 3.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale, 9.0 -> 7.0 km/h a 0.0%.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 1800,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 6x (40 sec @ 15.0 km/h / 40 sec rec @ 8.0 km/h). Focus primario sull'aumento della cadenza (>175 spm). (RUNNING) ---
+{
+  "workoutName": "6x (40 sec @ 15.0 km/h / 40 sec rec @ 8.0 km/h). Focus primario sull'aumento della cadenza (>175 spm).",
+  "description": "6x (40 sec @ 15.0 km/h / 40 sec rec @ 8.0 km/h). Focus primario sull'aumento della cadenza (>175 spm).",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento graduale, 9.0 -> 10.5 km/h a 1.0%.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 300.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": null,
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 6,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Lavoro VO2 Max",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 0.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "Recupero attivo Z1",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 0.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 6.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale, 10.0 -> 7.0 km/h a 0.0%.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 420.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 720,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 6x (45 sec @ 14.0 km/h / 45 sec rec @ 7.5 km/h). Focus primario sull'aumento della cadenza (>175 spm). (RUNNING) ---
+{
+  "workoutName": "6x (45 sec @ 14.0 km/h / 45 sec rec @ 7.5 km/h). Focus primario sull'aumento della cadenza (>175 spm).",
+  "description": "6x (45 sec @ 14.0 km/h / 45 sec rec @ 7.5 km/h). Focus primario sull'aumento della cadenza (>175 spm).",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento graduale, 9.0 -> 10.5 km/h.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 300.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 2.771,
+          "targetValueTwo": 3.062
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": null,
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 6,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Lavoro Cadenza Boost (4:17/km)",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 45.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 3.696,
+              "targetValueTwo": 4.086
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "Recupero attivo Z1",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 45.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 6.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale, 10.0 -> 7.0 km/h.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 360.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 1.847,
+          "targetValueTwo": 2.042
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 1200,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- 8x (30 sec @ 14.4 km/h / 30 sec rec @ 8.0 km/h). Focus primario sull'aumento della cadenza (>175 spm). (RUNNING) ---
+{
+  "workoutName": "8x (30 sec @ 14.4 km/h / 30 sec rec @ 8.0 km/h). Focus primario sull'aumento della cadenza (>175 spm).",
+  "description": "8x (30 sec @ 14.4 km/h / 30 sec rec @ 8.0 km/h). Focus primario sull'aumento della cadenza (>175 spm).",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento graduale, 9.0 -> 11.0 km/h.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 300.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 2.903,
+          "targetValueTwo": 3.208
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": null,
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 8,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Lavoro VO2 Max (4:10/km)",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 30.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 3.8,
+              "targetValueTwo": 4.2
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "Recupero attivo Z1",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 30.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 8.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento graduale, 10.0 -> 7.0 km/h.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 420.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 1.847,
+          "targetValueTwo": 2.042
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 1200,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- Sweet Spot Booster: 2 blocchi di lavoro a soglia per migliorare l'FTP e la resistenza sulla distanza Olympic. (CYCLING) ---
+{
+  "workoutName": "Sweet Spot Booster: 2 blocchi di lavoro a soglia per migliorare l'FTP e la resistenza sulla distanza Olympic.",
+  "description": "Sweet Spot Booster: 2 blocchi di lavoro a soglia per migliorare l'FTP e la resistenza sulla distanza Olympic.",
+  "sportType": {
+    "sportTypeId": 2,
+    "sportTypeKey": "cycling"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 2,
+        "sportTypeKey": "cycling"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento progressivo: 5 min facili (100W), 5 min in rampa fino a 150W. Cadenza 90+ RPM.",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 115.0,
+          "targetValueTwo": 145.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Primo blocco Sweet Spot. Pedala forte ma controllato. Cadenza 90-95 RPM.",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 900.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 165.0,
+          "targetValueTwo": 195.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Recupero attivo. Bevi e preparati per l'ultimo blocco.",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 300.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 85.0,
+          "targetValueTwo": 115.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 4,
+          "description": "Secondo blocco Sweet Spot. Mantieni la potenza e la cadenza.",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 165.0,
+          "targetValueTwo": 195.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 5,
+          "description": "Defaticamento completo, pedalata leggera e sciolta.",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 300.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 65.0,
+          "targetValueTwo": 95.0
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 2700,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}

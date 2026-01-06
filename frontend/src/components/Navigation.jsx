@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, Activity, BookOpen, HelpCircle, Mail, Bell, User } from 'lucide-react';
+import { LayoutDashboard, Activity, BookOpen, HelpCircle, Mail, Bell, User, Bot } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
@@ -44,6 +44,12 @@ const Navigation = () => {
                         active={isActive('/help-center')}
                         onClick={() => navigate('/help-center')}
                         icon={HelpCircle}
+                    />
+                    <NavItem
+                        label="AI Coach"
+                        active={isActive('/chat')}
+                        onClick={() => navigate('/chat')}
+                        icon={Bot}
                     />
                 </div>
 

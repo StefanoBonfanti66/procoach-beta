@@ -50,14 +50,22 @@ const Login = () => {
                         navigate('/onboarding');
                     }
                 } else {
-                    setError('Errore durante l\'aggiornamento del profilo locale.');
+                    throw new Error('Errore durante l\'aggiornamento del profilo.');
                 }
             } else {
-                setError('Credenziali Garmin Connect non valide o errore di connessione.');
+                let errMsg = 'Credenziali Garmin non valide';
+                try {
+                    const errData = await syncResponse.json();
+                    if (errData.detail) errMsg = errData.detail;
+                    if (errData.warning) errMsg = errData.warning;
+                } catch (e) {
+                    // response wasn't json
+                }
+                throw new Error(errMsg);
             }
         } catch (err) {
             console.error('Login error:', err);
-            setError('Errore di rete. Verifica la tua connessione.');
+            setError(err.message || 'Errore di connessione al server.');
         } finally {
             setIsLoading(false);
         }

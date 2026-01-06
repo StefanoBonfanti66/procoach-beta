@@ -7,6 +7,7 @@ import WorkoutLibrary from './pages/WorkoutLibrary';
 import Progress from './pages/Progress';
 import HelpCenter from './pages/HelpCenter';
 import Login from './pages/Login';
+import Chat from './pages/Chat';
 
 const AppContent = () => {
     const location = useLocation();
@@ -30,6 +31,7 @@ const AppContent = () => {
                 <Route path="/progress" element={<Progress />} />
                 <Route path="/workout-library" element={<WorkoutLibrary />} />
                 <Route path="/help-center" element={<HelpCenter />} />
+                <Route path="/chat" element={<Chat />} />
             </Routes>
         </>
     );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Settings, MessageSquare, Bell, User, Calendar, RefreshCw, ChevronLeft, ChevronRight, Activity, Zap, Trophy, Clock, HeartPulse, RefreshCcw, Target, ChevronUp, ChevronDown, Copy, Trash2, Layers, Bookmark, Waves, Bike, Timer, Coffee, Flame, Footprints } from 'lucide-react';
+import { Settings, MessageSquare, Bell, User, Calendar, RefreshCw, ChevronLeft, ChevronRight, Activity, Zap, Trophy, Clock, HeartPulse, RefreshCcw, Target, ChevronUp, ChevronDown, Copy, Trash2, Layers, Bookmark, Waves, Bike, Timer, Coffee, Flame, Footprints, Bot, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import WorkoutChart from '../components/WorkoutChart';
 
@@ -320,42 +320,55 @@ const Dashboard = () => {
                             </div>
                         </div>
 
-                        {/* Program Navigation */}
-                        <div className="flex items-center justify-between mb-2">
-                            <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                                <Calendar size={20} className="text-emerald-500" />
-                                Programma {currentWeek.start_date} - {currentWeek.end_date}
-                            </h3>
-                            <div className="flex gap-2">
-                                <button
-                                    onClick={() => {
-                                        const email = localStorage.getItem('athlete_email');
-                                        if (email) {
-                                            fetchRecentActivities(email);
-                                            analyzeCompliance(email, fullPlan);
-                                        }
-                                    }}
-                                    disabled={isFetchingActivities || isAnalyzing}
-                                    className="p-2 bg-blue-600/10 rounded-xl hover:bg-blue-600/20 text-blue-400 transition-all border border-blue-500/10 flex items-center gap-2 text-xs font-bold"
-                                    title="Aggiorna Dati"
-                                >
-                                    <RefreshCw size={14} className={isFetchingActivities || isAnalyzing ? 'animate-spin' : ''} />
-                                    SYNC
-                                </button>
-                                <button
-                                    onClick={() => setCurrentWeekIdx(prev => Math.max(0, prev - 1))}
-                                    disabled={currentWeekIdx === 0}
-                                    className="p-2 bg-white/5 rounded-xl hover:bg-white/10 disabled:opacity-20 transition-all border border-white/5"
-                                >
-                                    <ChevronLeft size={20} />
-                                </button>
-                                <button
-                                    onClick={() => setCurrentWeekIdx(prev => Math.min(fullPlan.length - 1, prev + 1))}
-                                    disabled={currentWeekIdx === fullPlan.length - 1}
-                                    className="p-2 bg-white/5 rounded-xl hover:bg-white/10 disabled:opacity-20 transition-all border border-white/5"
-                                >
-                                    <ChevronRight size={20} />
-                                </button>
+                        {/* Program Navigation (LOCKED TO WEEK 1 as requested) */}
+                        <div className="flex flex-col gap-4 mb-4">
+                            {/* Proactive Alert Banner */}
+                            {currentWeek.proactive_modification && (
+                                <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-start gap-4 animate-in slide-in-from-top-4">
+                                    <div className="p-2 bg-red-500 rounded-xl text-white shadow-lg shadow-red-500/20 shrink-0">
+                                        <Activity size={20} />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-red-400 text-sm font-black uppercase tracking-widest mb-1">
+                                            Intervento Proattivo Antigravity
+                                        </h4>
+                                        <p className="text-red-100/80 text-sm leading-relaxed font-medium">
+                                            {currentWeek.coach_note}
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="flex items-center justify-between">
+                                <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                                    <Calendar size={20} className="text-emerald-500" />
+                                    Settimana Corrente ({currentWeek.start_date})
+                                </h3>
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={() => {
+                                            const email = localStorage.getItem('athlete_email');
+                                            if (email) {
+                                                fetchRecentActivities(email);
+                                                analyzeCompliance(email, fullPlan);
+                                            }
+                                        }}
+                                        disabled={isFetchingActivities || isAnalyzing}
+                                        className="p-2 bg-blue-600/10 rounded-xl hover:bg-blue-600/20 text-blue-400 transition-all border border-blue-500/10 flex items-center gap-2 text-xs font-bold"
+                                        title="Aggiorna Dati e Ricalcola Piano"
+                                    >
+                                        <RefreshCw size={14} className={isFetchingActivities || isAnalyzing ? 'animate-spin' : ''} />
+                                        RICALCOLA
+                                    </button>
+
+                                    {/* Future weeks allow navigation but show Locked State */}
+                                    <div className="flex items-center bg-white/5 rounded-xl border border-white/5 px-3 py-2 gap-2 text-xs font-medium text-gray-500">
+                                        <span>Prossime settimane</span>
+                                        <div className="flex items-center gap-1 text-gray-600 uppercase font-black tracking-wider text-[10px] border border-gray-700 rounded px-1.5 bg-black/20">
+                                            Auto-Generating <Loader2 size={10} className="animate-spin" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -615,10 +628,13 @@ const Dashboard = () => {
                                         <span className="text-gray-400 font-medium group-hover:text-white text-sm">Profilo Atleta</span>
                                     </div>
                                 </button>
-                                <button className="w-full flex items-center justify-between p-4 hover:bg-white/5 transition-colors text-left group">
+                                <button
+                                    onClick={() => navigate('/chat')}
+                                    className="w-full flex items-center justify-between p-4 hover:bg-white/5 transition-colors text-left group"
+                                >
                                     <div className="flex items-center gap-3">
-                                        <Zap size={18} className="text-gray-500 group-hover:text-white" />
-                                        <span className="text-gray-400 font-medium group-hover:text-white text-sm">Zone Potenza</span>
+                                        <Bot size={18} className="text-gray-500 group-hover:text-white" />
+                                        <span className="text-gray-400 font-medium group-hover:text-white text-sm">AI Coach</span>
                                     </div>
                                 </button>
                             </div>

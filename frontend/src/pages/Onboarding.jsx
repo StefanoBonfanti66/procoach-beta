@@ -105,8 +105,18 @@ function Onboarding() {
             const currentDur = prev.habits?.day_preferences?.[day]?.[sport] || 0;
             const newDur = currentDur > 0 ? 0 : 60; // Toggle between 0 and default 60
 
+            const currentDayPrefs = prev.habits?.day_preferences?.[day] || {};
+            const updatedDayPrefs = { ...currentDayPrefs, [sport]: newDur };
+
+            // Recalculate total minutes
+            const totalMinutes = Object.values(updatedDayPrefs).reduce((sum, v) => sum + (parseInt(v) || 0), 0);
+
             return {
                 ...prev,
+                availability: {
+                    ...prev.availability,
+                    [day]: totalMinutes > 0 ? totalMinutes : (newDur > 0 ? newDur : prev.availability[day])
+                },
                 habits: {
                     ...(prev.habits || {}),
                     day_preferences: {
@@ -123,19 +133,32 @@ function Onboarding() {
 
     const handleSportDurationChange = (day, sport, value) => {
         const val = parseInt(value) || 0;
-        setFormData(prev => ({
-            ...prev,
-            habits: {
-                ...(prev.habits || {}),
-                day_preferences: {
-                    ...(prev.habits?.day_preferences || {}),
-                    [day]: {
-                        ...(prev.habits?.day_preferences?.[day] || {}),
-                        [sport]: val
+        setFormData(prev => {
+            const currentDayPrefs = prev.habits?.day_preferences?.[day] || {};
+            const updatedDayPrefs = { ...currentDayPrefs, [sport]: val };
+
+            // Calculate new total minutes for this day
+            const totalMinutes = Object.values(updatedDayPrefs).reduce((sum, v) => sum + (parseInt(v) || 0), 0);
+
+            // If the user is setting specific sport durations, we should respect that sum as the availability
+            // But we should ensure we don't accidentally reduce it if they just want to cap it. 
+            // Actually, if they are granularly planning, the sum is the truth.
+
+            return {
+                ...prev,
+                availability: {
+                    ...prev.availability,
+                    [day]: totalMinutes > 0 ? totalMinutes : prev.availability[day]
+                },
+                habits: {
+                    ...(prev.habits || {}),
+                    day_preferences: {
+                        ...(prev.habits?.day_preferences || {}),
+                        [day]: updatedDayPrefs
                     }
                 }
-            }
-        }));
+            };
+        });
     }
 
     const handleGarminSync = async () => {

@@ -2,7 +2,8 @@ from fastapi import FastAPI, HTTPException, Depends
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
-from database import SessionLocal, engine, User, get_db
+from database import SessionLocal, engine, User, get_db, ChatMessage
+from challenge_logic import ChallengeLogic
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 import uvicorn
@@ -13,6 +14,16 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = FastAPI(title="Triathlon Coach API")
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request, exc):
@@ -59,34 +70,41 @@ class UserProfileSchema(BaseModel):
 async def root():
     return {"message": "Triathlon Coach API is running"}
 
-@app.post("/user/sync-metrics")
+@app.post("/api/user/sync-metrics")
 async def sync_metrics(credentials: Dict[str, str], db: Session = Depends(get_db)):
-    print(f"DEBUG: Sync request received for {credentials.get('email')}")
-    
-    # Try to find existing tokens
-    db_user = db.query(User).filter(User.email == credentials.get('email')).first()
-    tokens = db_user.garmin_tokens if db_user else None
-    
-    from garmin_sync import GarminManager
-    gm = GarminManager(credentials['email'], credentials['password'], tokens=tokens)
-    metrics = gm.get_performance_metrics()
-    
-    # Save tokens to help Cloud instance
-    if gm.get_session_tokens() and db_user:
-        db_user.garmin_tokens = gm.get_session_tokens()
-        db.commit()
-    
-    if not metrics:
-        print("WARNING: Sync failed during onboarding, but proceeding to allow user creation.")
-        return {"status": "partial_success", "metrics": {}, "warning": "Garmin sync skipped"}
-    
-    if isinstance(metrics, dict) and "error" in metrics:
-        print(f"WARNING: Garmin login error: {metrics['error']}. Proceeding anyway.")
-        return {"status": "partial_success", "metrics": {}, "warning": metrics["error"]}
+    try:
+        print(f"DEBUG: Sync request received for {credentials.get('email')}")
         
-    return {"status": "success", "metrics": metrics}
+        # Try to find existing tokens
+        db_user = db.query(User).filter(User.email == credentials.get('email')).first()
+        tokens = db_user.garmin_tokens if db_user else None
+        
+        from garmin_sync import GarminManager
+        gm = GarminManager(credentials['email'], credentials['password'], tokens=tokens)
+        metrics = gm.get_performance_metrics()
+        
+        # Save tokens to help Cloud instance
+        if gm.get_session_tokens() and db_user:
+            db_user.garmin_tokens = gm.get_session_tokens()
+            db.commit()
+        
+        if not metrics:
+            print("WARNING: Sync failed during onboarding, but proceeding to allow user creation.")
+            return {"status": "partial_success", "metrics": {}, "warning": "Garmin sync skipped"}
+        
+        if isinstance(metrics, dict) and "error" in metrics:
+            print(f"WARNING: Garmin login error: {metrics['error']}. Proceeding anyway.")
+            # We return 401 here to let frontend know credentials were bad
+            return JSONResponse(status_code=401, content={"detail": metrics["error"]})
+            
+        return {"status": "success", "metrics": metrics}
+    except Exception as e:
+        print(f"CRITICAL SYNC ERROR: {e}")
+        import traceback
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"detail": f"Server Error: {str(e)}"})
 
-@app.post("/user/profile")
+@app.post("/api/user/profile")
 async def update_profile(profile: UserProfileSchema, db: Session = Depends(get_db)):
     print(f"DEBUG: Received profile update for {profile.email}")
     try:
@@ -133,7 +151,7 @@ async def update_profile(profile: UserProfileSchema, db: Session = Depends(get_d
         db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/user/profile/{email}")
+@app.get("/api/user/profile/{email}")
 async def get_profile(email: str, db: Session = Depends(get_db)):
     print(f"DEBUG: Fetching profile for {email}")
     db_user = db.query(User).filter(User.email == email).first()
@@ -172,7 +190,7 @@ async def get_profile(email: str, db: Session = Depends(get_db)):
         "password": db_user.hashed_password # For internal sync simplicity in this dev phase
     }
 
-@app.get("/user/training-stats/{email}")
+@app.get("/api/user/training-stats/{email}")
 async def get_training_stats(email: str, db: Session = Depends(get_db)):
     print(f"DEBUG: Fetching training stats for {email}")
     db_user = db.query(User).filter(User.email == email).first()
@@ -193,7 +211,7 @@ async def get_training_stats(email: str, db: Session = Depends(get_db)):
         
     return stats
 
-@app.get("/user/health-metrics/{email}")
+@app.get("/api/user/health-metrics/{email}")
 async def get_health_metrics(email: str, db: Session = Depends(get_db)):
     print(f"DEBUG: Fetching health metrics for {email}")
     db_user = db.query(User).filter(User.email == email).first()
@@ -201,15 +219,20 @@ async def get_health_metrics(email: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="User credentials not found")
         
     from garmin_sync import GarminManager
-    gm = GarminManager(db_user.email, db_user.hashed_password)
+    gm = GarminManager(db_user.email, db_user.hashed_password, tokens=db_user.garmin_tokens)
     metrics = gm.get_health_metrics()
+    
+    # Save tokens to persist session
+    if gm.get_session_tokens():
+        db_user.garmin_tokens = gm.get_session_tokens()
+        db.commit()
     
     if not metrics:
         raise HTTPException(status_code=500, detail="Failed to fetch health metrics")
         
     return metrics
 
-@app.get("/user/recent-activities/{email}")
+@app.get("/api/user/recent-activities/{email}")
 async def get_recent_activities(email: str, db: Session = Depends(get_db)):
     print(f"DEBUG: Fetching recent activities for {email}")
     db_user = db.query(User).filter(User.email == email).first()
@@ -217,12 +240,17 @@ async def get_recent_activities(email: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="User credentials not found")
         
     from garmin_sync import GarminManager
-    gm = GarminManager(db_user.email, db_user.hashed_password)
+    gm = GarminManager(db_user.email, db_user.hashed_password, tokens=db_user.garmin_tokens)
     activities = gm.get_recent_activities(days=14)
     
+    # Save tokens to persist session
+    if gm.get_session_tokens():
+        db_user.garmin_tokens = gm.get_session_tokens()
+        db.commit()
+        
     return activities
 
-@app.post("/user/generate-plan")
+@app.post("/api/user/generate-plan")
 async def generate_plan(payload: Dict[str, str], db: Session = Depends(get_db)):
     email = payload.get("email")
     print(f"DEBUG: Generating detailed plan for {email}")
@@ -248,7 +276,22 @@ async def generate_plan(payload: Dict[str, str], db: Session = Depends(get_db)):
         except Exception as e:
             print(f"DEBUG: Could not fetch reactive data: {e}")
 
-    # 3. Prepare User Data for Coach
+    # 3. BRIDGE: Fetch latest AI Coach insights from chat history
+    ai_insights = ""
+    try:
+        from models import ChatMessage
+        last_coach_msgs = db.query(ChatMessage).filter(
+            ChatMessage.user_email == email,
+            ChatMessage.role == "assistant"
+        ).order_by(ChatMessage.id.desc()).limit(2).all()
+        
+        if last_coach_msgs:
+            ai_insights = "\n".join([m.content for m in reversed(last_coach_msgs)])
+            print(f"DEBUG: Injecting {len(ai_insights)} chars of AI insights into generation")
+    except Exception as e:
+        print(f"DEBUG: Failed to fetch AI insights: {e}")
+
+    # 4. Prepare User Data for Coach
     user_data = {
         "name": db_user.name,
         "age": db_user.age,
@@ -263,7 +306,8 @@ async def generate_plan(payload: Dict[str, str], db: Session = Depends(get_db)):
         "availability": db_user.availability or {},
         "habits": db_user.habits or {},
         "health_metrics": health_metrics, # This activates the reactive logic
-        "recent_activities": recent_activities
+        "recent_activities": recent_activities,
+        "ai_insights": ai_insights # The coach now 'drives' the generator
     }
     
     cl = CoachLogic()
@@ -288,7 +332,7 @@ async def generate_plan(payload: Dict[str, str], db: Session = Depends(get_db)):
         
     return {"status": "success", "plan": final_plan_weeks}
 
-@app.post("/user/sync-calendar")
+@app.post("/api/user/sync-calendar")
 async def sync_calendar(payload: Dict[str, Any], db: Session = Depends(get_db)):
     email = payload.get("email")
     week_data = payload.get("week_data")
@@ -359,7 +403,7 @@ async def sync_calendar(payload: Dict[str, Any], db: Session = Depends(get_db)):
         
     return {"status": "success", "results": results}
 
-@app.post("/user/sync-single-workout")
+@app.post("/api/user/sync-single-workout")
 async def sync_single_workout(payload: Dict[str, Any], db: Session = Depends(get_db)):
     email = payload.get("email")
     workout = payload.get("workout")
@@ -379,8 +423,17 @@ async def sync_single_workout(payload: Dict[str, Any], db: Session = Depends(get
              raise HTTPException(status_code=400, detail="Garmin login failed")
              
         activity_type = "RUNNING"
-        act_lower = workout.get("activity", "").lower()
-        sport_meta = workout.get("sport_type", "").lower()
+        # Handle cases where frontend passes nested 'changes' object or flat 'workout'
+        act_name = workout.get("activity") or workout.get("description")
+        desc = workout.get("description", "AI Workout")
+        
+        # Check if 'steps' are inside a 'changes' object (common AI pattern)
+        steps = workout.get("steps")
+        if not steps and "changes" in workout:
+             steps = workout["changes"].get("steps")
+             
+        act_lower = str(act_name).lower()
+        sport_meta = str(workout.get("sport_type", "")).lower()
 
         if sport_meta == "swim" or "swim" in act_lower or "nuoto" in act_lower: 
             activity_type = "SWIMMING"
@@ -388,12 +441,12 @@ async def sync_single_workout(payload: Dict[str, Any], db: Session = Depends(get
             activity_type = "CYCLING"
         
         success = gm.create_and_schedule_workout(
-            name=workout.get('activity'),
-            description=workout.get('description', 'Saved from Library'),
+            name=act_name,
+            description=desc,
             duration_min=workout.get("duration", 60),
             date_str=date_str,
             activity_type=activity_type,
-            steps=workout.get("steps"),
+            steps=steps, # Now reliably extracted
             pool_length=user.pool_length or 25.0
         )
         return {"status": "success", "workout_id": success}
@@ -404,7 +457,7 @@ async def sync_single_workout(payload: Dict[str, Any], db: Session = Depends(get
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/user/analyze-compliance")
+@app.post("/api/user/analyze-compliance")
 async def analyze_compliance(payload: Dict[str, Any], db: Session = Depends(get_db)):
     email = payload.get("email")
     plan = payload.get("plan") # The current full plan
@@ -417,13 +470,25 @@ async def analyze_compliance(payload: Dict[str, Any], db: Session = Depends(get_
     from garmin_sync import GarminManager
     from coach_logic import CoachLogic
     
-    gm = GarminManager(user.email, user.hashed_password)
+    gm = GarminManager(user.email, user.hashed_password, tokens=user.garmin_tokens)
     # Fetch last 30 days to have a good look back
     recent_activities = gm.get_recent_activities(days=30)
+    
+    if gm.get_session_tokens():
+        user.garmin_tokens = gm.get_session_tokens()
+        db.commit()
     
     if recent_activities is None:
         print(f"DEBUG: Garmin login failed for {email}")
         raise HTTPException(status_code=401, detail="Garmin login failed. Please check your credentials.")
+
+    # BRIDGE: Update Challenge Progress
+    try:
+        from challenge_logic import ChallengeLogic
+        cl = ChallengeLogic(db)
+        cl.update_challenge_progress(email, recent_activities)
+    except Exception as e:
+        print(f"DEBUG: Challenge progress update failed: {e}")
     
     print(f"DEBUG: Found {len(recent_activities)} activities for {email}")
         
@@ -432,6 +497,208 @@ async def analyze_compliance(payload: Dict[str, Any], db: Session = Depends(get_
     print(f"DEBUG: Analysis complete. All feedback count: {len(analysis['all_activities_feedback'])}")
     
     return {"status": "success", "analysis": analysis}
+
+# ==================== AI CHAT ENDPOINTS ====================
+
+from database import ChatMessage
+from ai_coach import AICoach
+from datetime import datetime as dt
+
+class ChatRequest(BaseModel):
+    email: str
+    message: str
+
+@app.post("/api/chat")
+async def chat_with_coach(request: ChatRequest, db: Session = Depends(get_db)):
+    """Send message to AI coach and get response with full context"""
+    try:
+        # Get user profile for context
+        user = db.query(User).filter(User.email == request.email).first()
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        # Build comprehensive user profile
+        user_profile = {
+            "name": user.name,
+            "age": user.age,
+            "weight": user.weight,
+            "height": user.height,
+            "experience_level": user.experience_level,
+            "primary_objective": user.primary_objective,
+            "race_distance": user.race_distance,
+            "race_date": user.race_date,
+            "race_time_goal": user.race_time_goal,
+            "hr_max": user.hr_max,
+            "hr_rest": user.hr_rest,
+            "ftp": user.ftp,
+            "css": user.css,
+            "running_threshold": user.running_threshold
+        }
+        
+        # Try to fetch recent Garmin metrics for enhanced context
+        recent_stats = {}
+        if user.hashed_password:
+            try:
+                from garmin_sync import GarminManager
+                gm = GarminManager(user.email, user.hashed_password, tokens=user.garmin_tokens)
+                
+                # Get health metrics (HRV, sleep, stress, etc.)
+                health_metrics = gm.get_health_metrics()
+                if health_metrics:
+                    recent_stats['health_metrics'] = health_metrics
+                
+                # Get recent activities (last 7 days)
+                recent_activities = gm.get_recent_activities(days=7)
+                if recent_activities:
+                    recent_stats['recent_activities'] = recent_activities
+                
+                # Update tokens if available
+                if gm.get_session_tokens():
+                    user.garmin_tokens = gm.get_session_tokens()
+                    db.commit()
+                    
+            except Exception as e:
+                print(f"Could not fetch Garmin data for chat context: {e}")
+                # Continue without Garmin data - AI can still help
+        
+        # Try to get current training plan from user's stored plan
+        # (In a real app, you'd store the plan in DB. For now, we'll skip this)
+        training_plan = None
+        # TODO: Fetch from database if you store plans per user
+        
+        # Get conversation history
+        history = db.query(ChatMessage).filter(
+            ChatMessage.user_email == request.email
+        ).order_by(ChatMessage.id.desc()).limit(20).all()
+        
+        conversation_history = [
+            {"role": msg.role, "content": msg.content}
+            for msg in reversed(history)
+        ]
+        
+        # Get AI response with full context
+        coach = AICoach()
+        response_text, metadata = coach.chat(
+            request.message,
+            conversation_history,
+            user_profile,
+            recent_stats=recent_stats if recent_stats else None,
+            training_plan=training_plan
+        )
+        
+        # Save user message
+        user_msg = ChatMessage(
+            user_email=request.email,
+            role="user",
+            content=request.message,
+            timestamp=dt.now().isoformat(),
+            msg_metadata={}
+        )
+        db.add(user_msg)
+        
+        # Save assistant response
+        assistant_msg = ChatMessage(
+            user_email=request.email,
+            role="assistant",
+            content=response_text,
+            timestamp=dt.now().isoformat(),
+            msg_metadata=metadata
+        )
+        db.add(assistant_msg)
+        db.commit()
+        
+        return {
+            "response": response_text,
+            "metadata": metadata,
+            "timestamp": dt.now().isoformat()
+        }
+        
+    except Exception as e:
+        print(f"Chat error: {e}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/chat/history/{email}")
+async def get_chat_history(email: str, limit: int = 50, db: Session = Depends(get_db)):
+    """Get conversation history for user"""
+    messages = db.query(ChatMessage).filter(
+        ChatMessage.user_email == email
+    ).order_by(ChatMessage.id.desc()).limit(limit).all()
+    
+    return {
+        "messages": [
+            {
+                "role": msg.role,
+                "content": msg.content,
+                "timestamp": msg.timestamp,
+                "metadata": msg.msg_metadata
+            }
+            for msg in reversed(messages)
+        ]
+    }
+
+@app.get("/api/user/challenges/{email}")
+async def get_challenges(email: str, db: Session = Depends(get_db)):
+    from database import Challenge, UserChallenge
+    from challenge_logic import ChallengeLogic
+    
+    # Check if we need to generate new challenges
+    cl = ChallengeLogic(db)
+    cl.generate_weekly_challenges(email)
+    
+    # Get active/recent challenges
+    user_challenges = db.query(UserChallenge).filter(
+        UserChallenge.user_email == email
+    ).order_by(UserChallenge.start_date.desc()).limit(10).all()
+    
+    results = []
+    for uc in user_challenges:
+        ch = db.query(Challenge).filter(Challenge.id == uc.challenge_id).first()
+        if ch:
+            results.append({
+                "id": uc.id,
+                "title": ch.title,
+                "description": ch.description,
+                "category": ch.category,
+                "type": ch.challenge_type,
+                "metric": ch.metric,
+                "target_value": ch.target_value,
+                "current_value": uc.current_value,
+                "status": uc.status,
+                "badge": ch.badge_icon,
+                "xp": ch.xp_reward,
+                "end_date": uc.end_date
+            })
+            
+    return results
+
+@app.get("/api/user/performance-history/{email}")
+async def get_performance_history(email: str, db: Session = Depends(get_db)):
+    from database import PerformanceHistory
+    
+    history = db.query(PerformanceHistory).filter(
+        PerformanceHistory.user_email == email
+    ).order_by(PerformanceHistory.recorded_at.asc()).all()
+    
+    return [
+        {
+            "metric": h.metric_type,
+            "value": h.value,
+            "date": h.recorded_at
+        } for h in history
+    ]
+
+@app.delete("/api/chat/history/{email}")
+async def delete_chat_history(email: str, db: Session = Depends(get_db)):
+    """Clear conversation history for user"""
+    try:
+        db.query(ChatMessage).filter(ChatMessage.user_email == email).delete()
+        db.commit()
+        return {"status": "success", "message": "History cleared"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8005, reload=True)

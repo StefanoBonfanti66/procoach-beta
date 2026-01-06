@@ -13,8 +13,10 @@ class GarminManager:
         self.password = password
         self.tokens = tokens
         self.client = None
+        self.last_login_error = None
         
     def login(self):
+        self.last_login_error = None
         try:
             print(f"DEBUG: Attempting Garmin login for {self.email}...")
             self.client = Garmin(self.email, self.password)
@@ -23,18 +25,46 @@ class GarminManager:
             if self.tokens:
                 try:
                     self.client.garth.loads(self.tokens)
-                    print("DEBUG: Session loaded from stored tokens.")
+                    print("DEBUG: Tokens loaded, verifying session...")
+                    
+                    # Test call to verify session
+                    today = datetime.date.today().isoformat()
+                    self.client.get_user_summary(today)
+                    
+                    # REPAIR: If display_name is missing, try to fetch it from social profile
+                    if not self.client.display_name:
+                        print("DEBUG: display_name missing after token load, attempting repair...")
+                        try:
+                            profile = self.client.get_social_profile()
+                            self.client.display_name = profile.get('userName')
+                        except: pass
+                    
+                    # If STILL missing, we can't reliably build URLs
+                    if not self.client.display_name:
+                        raise Exception("Session loaded/verified but display_name is missing")
+                        
+                    print(f"DEBUG: Session restored for {self.client.display_name}")
                     return True
                 except Exception as token_err:
-                    print(f"DEBUG: Token login failed ({token_err}). Falling back to password.")
+                    print(f"DEBUG: Token session invalid or repairable ({token_err}). Falling back to password.")
             
             # 2. Standard Login
             self.client.login()
-            logger.info("Garmin login successful")
+            print(f"DEBUG: Password login successful for {self.client.display_name}")
             return True
         except Exception as e:
-            msg = f"Garmin login failed for {self.email}: {e}"
+            err_str = str(e)
+            msg = f"Garmin login failed for {self.email}: {err_str}"
             logger.error(msg)
+            
+            # Set a more user-friendly error message if possible
+            if "Cloudflare" in err_str or "403" in err_str:
+                self.last_login_error = "Accesso bloccato da protezione Garmin (Cloudflare). Riprova più tardi."
+            elif "Invalid" in err_str or "Authentication" in err_str:
+                self.last_login_error = "Email o Password non corretti."
+            else:
+                self.last_login_error = f"Errore login: {err_str}"
+                
             try:
                 with open("sync_error.log", "a") as f:
                     f.write(f"{datetime.datetime.now()} - {msg}\n")
@@ -81,11 +111,21 @@ class GarminManager:
                     "endConditionValue": dur_secs
                 })
             else:
-                def process_steps(steps_data, start_order=1, is_child=False):
+                def process_steps(steps_data, start_order=1, is_child=False, global_rec_kmh=None):
                     processed = []
                     current_order = start_order
                     
                     for s_data in steps_data:
+                        # 1. Alias & Shorthand Logic
+                        if 'repeat' in s_data and 'repeat_count' not in s_data: s_data['repeat_count'] = s_data['repeat']
+                        
+                        if s_data.get('repeat_count', 1) > 1 and 'steps' not in s_data:
+                            rec_min = float(s_data.get('recovery_dur', 0))
+                            if rec_min > 0:
+                                work = s_data.copy(); work['repeat_count'] = 1; work.pop('steps', None)
+                                rec = {"type": "RECOVERY", "duration_min": rec_min, "description": "Rec"}
+                                s_data['steps'] = [work, rec]
+
                         # Handle Repeat Blocks (RepeatGroupDTO based on User JSON)
                         if 'steps' in s_data and s_data.get('repeat_count', 1) > 1:
                             reps = int(s_data['repeat_count'])
@@ -97,7 +137,7 @@ class GarminManager:
                                 "stepType": {"stepTypeId": 6, "stepTypeKey": "repeat"},
                                 "childStepId": 1 if is_child else 1, # Garmin seems to like '1' for structured parts
                                 "numberOfIterations": reps,
-                                "workoutSteps": process_steps(s_data['steps'], start_order=1, is_child=True),
+                                "workoutSteps": process_steps(s_data['steps'], start_order=1, is_child=True, global_rec_kmh=global_rec_kmh),
                                 "endCondition": {"conditionTypeId": 7, "conditionTypeKey": "iterations"},
                                 "endConditionValue": float(reps),
                                 "skipLastRestStep": True,
@@ -105,8 +145,86 @@ class GarminManager:
                             }
                             processed.append(repeat_group)
                         else:
-                            # Standard Step
-                            dur_val = int(float(s_data.get('duration_min', 0)) * 60)
+                            # --- PRE-PROCESS TARGETS FROM AI ---
+                            # AI sends "target": {"type": "pace", "val": "5:30"}
+                            print(f"DEBUG STEP PROCESSING: {s_data.get('description', 'No Desc')} Keys: {list(s_data.keys())}")
+                            
+                            if 'target' in s_data:
+                                tgt = s_data['target']
+                                t_type = tgt.get('type', '').lower()
+                                t_val = tgt.get('val')
+                                
+                                if t_type == 'pace' and t_val:
+                                    # Handle "5:30" or "330" (seconds)
+                                    try:
+                                        if ":" in str(t_val):
+                                            m, s = map(int, str(t_val).split(":"))
+                                            sec_km = m * 60 + s
+                                            if sec_km > 0:
+                                                s_data['pace_ms'] = 1000.0 / sec_km
+                                        else:
+                                            # Assume seconds/km
+                                            sec_km = float(t_val)
+                                            if sec_km > 0:
+                                                s_data['pace_ms'] = 1000.0 / sec_km # store as m/s
+                                    except: pass
+                                    
+                                elif t_type == 'power' and t_val:
+                                    try:
+                                        s_data['power_watts'] = int(t_val)
+                                    except: pass
+                                    
+                                elif t_type == 'hr' and t_val:
+                                    try:
+                                        s_data['hr_bpm'] = int(t_val)
+                                    except: pass
+                            
+                            # FALLBACK: Extract from Description if missing (e.g. "Run at 5:00/km" or "12.5 km/h")
+                            if 'pace_ms' not in s_data and 'power_watts' not in s_data:
+                                import re
+                                desc = s_data.get('description', '')
+                                
+                                # 1. Try Pace (min/km)
+                                match_pace = re.search(r'\b([3-7]:[0-5]\d)(?:\s*/?km)?\b', desc)
+                                if match_pace:
+                                    try:
+                                        grp = match_pace.group(1)
+                                        m, s = map(int, grp.split(":"))
+                                        sec_km = m * 60 + s
+                                        if sec_km > 0:
+                                            s_data['pace_ms'] = 1000.0 / sec_km
+                                            print(f"DEBUG: EXTRACTED PACE {grp} from desc")
+                                    except: pass
+                                
+                                # 2. Try Speed (km/h) - Common for Treadmill
+                                if 'pace_ms' not in s_data:
+                                    match_speed = re.search(r'\b(\d{1,2}(?:\.\d)?)\s*km/h\b', desc, re.IGNORECASE)
+                                    if match_speed:
+                                        try:
+                                            kmh = float(match_speed.group(1))
+                                            if kmh > 0:
+                                                ms = kmh / 3.6
+                                                s_data['pace_ms'] = ms
+                                                print(f"DEBUG: EXTRACTED SPEED {kmh} km/h -> {ms} m/s")
+                                        except: pass
+
+                            print(f"DEBUG FINAL STEP DATA: {s_data}")
+
+                            # Standard Step Construction - Robust Duration
+                            # Check if duration_sec is provided explicitly
+                            dur_sec_explicit = s_data.get('duration_sec')
+                            if dur_sec_explicit:
+                                dur_val = int(dur_sec_explicit)
+                            else:
+                                # Parse duration_min, handle sub-minute values carefully
+                                d_min = float(s_data.get('duration_min', 0))
+                                dur_val = int(d_min * 60)
+                                # If duration is 0 but description mentions "X sec", try to recover
+                                if dur_val == 0:
+                                    match_sec = re.search(r'\b(\d+)\s*sec', s_data.get('description', ''), re.IGNORECASE)
+                                    if match_sec:
+                                        dur_val = int(match_sec.group(1))
+
                             dist_val = int(float(s_data.get('distance_m', 0)))
                             
                             stype_str = s_data.get('type', 'INTERVAL').lower()
@@ -142,19 +260,26 @@ class GarminManager:
                                 if step["endCondition"]["conditionTypeKey"] == "distance":
                                     step["preferredEndConditionUnit"] = {"unitId": 2, "unitKey": "kilometer", "factor": 100000.0}
                                     
-                            if 'pace_ms' in s_data and (sport_type['sportTypeKey'] == 'running' or sport_type['sportTypeKey'] == 'swimming'):
+                            # Target application logic
+                            if 'pace_ms' in s_data:
+                                print(f"DEBUG: Applying Pace Target: {s_data['pace_ms']} m/s to step {current_order}")
                                 speed = float(s_data['pace_ms'])
-                                if sport_type['sportTypeKey'] == 'swimming':
+                                
+                                # 1. Default Logic (applies to Running, and generic text-based pace)
+                                # Default to Pace Zone (Running matches Library behavior)
+                                step["targetType"] = {"workoutTargetTypeId": 6, "workoutTargetTypeKey": "pace.zone"}
+                                step["targetValueOne"] = round(speed * 0.95, 3)
+                                step["targetValueTwo"] = round(speed * 1.05, 3)
+                                
+                                # 2. Swim Specific Logic Override
+                                if sport_type.get('sportTypeKey') == 'swimming':
                                     # Use pace.zone (ID 6) and swim.css.offset (ID 17)
                                     step["targetType"] = {"workoutTargetTypeId": 6, "workoutTargetTypeKey": "pace.zone"}
                                     step["secondaryTargetType"] = {"workoutTargetTypeId": 17, "workoutTargetTypeKey": "swim.css.offset"}
                                     
                                     # Calculate offset from reference CSS
-                                    # We now pass 'css_ms' specifically in each step from coach_logic
                                     ref_css = float(s_data.get('css_ms', speed))
                                     if ref_css > 0:
-                                        # Offset = (Time per 100m at step pace) - (Time per 100m at CSS)
-                                        # Example: step is 2:40 (160s), CSS is 2:15 (135s) -> Offset = +25s
                                         step_sec_100 = 100.0 / speed
                                         ref_sec_100 = 100.0 / ref_css
                                         offset = round(step_sec_100 - ref_sec_100, 1)
@@ -164,6 +289,7 @@ class GarminManager:
                                         
                                     step["secondaryTargetValueTwo"] = 0.0
                                     step["targetValueUnit"] = None
+
                                 else:
                                     step["targetType"] = {"workoutTargetTypeId": 6, "workoutTargetTypeKey": "speed.target"}
                                 
@@ -183,13 +309,30 @@ class GarminManager:
                                     step["secondaryTargetType"] = {"workoutTargetTypeId": 3, "workoutTargetTypeKey": "cadence.target"}
                                     step["secondaryTargetValueOne"] = float(cad - 5)
                                     step["secondaryTargetValueTwo"] = float(cad + 5)
+
+                            if 'hr_bpm' in s_data:
+                                bpm = int(s_data['hr_bpm'])
+                                # Heart Rate Target (Custom Range)
+                                step["targetType"] = {"workoutTargetTypeId": 4, "workoutTargetTypeKey": "heart.rate.target"}
+                                step["targetValueOne"] = float(bpm - 5)
+                                step["targetValueTwo"] = float(bpm + 5)
+                                step["targetValueUnit"] = {"unitId": 5, "unitKey": "beatsPerMinute", "factor": 1.0}
                                 
                             processed.append(step)
                         
                         current_order += 1
                     return processed
 
-                workout_steps = process_steps(steps)
+                # Initial Call: Try to find Global Recovery Target in Name
+                g_rec_kmh = None
+                w_name = name # Use the 'name' parameter passed to create_and_schedule_workout
+                import re
+                match_g = re.search(r'rec(?:upero)?\s*@\s*(\d+(?:\.\d+)?)\s*km/h', w_name, re.IGNORECASE)
+                if match_g:
+                    g_rec_kmh = float(match_g.group(1))
+
+                workout_steps = process_steps(steps, global_rec_kmh=g_rec_kmh)
+
 
             # 3. Construct Final Payload
             # Note: We do NOT use RunningWorkout/WorkoutSegment classes to avoid validation errors.
@@ -335,8 +478,8 @@ class GarminManager:
             if not self.client: 
                 print("DEBUG: Attempting login...", flush=True)
                 if not self.login():
-                    print("DEBUG: Login failed in get_performance_metrics")
-                    return {"error": "Authentication failed"}
+                    print(f"DEBUG: Login failed: {self.last_login_error}")
+                    return {"error": self.last_login_error or "Authentication failed"}
             
             today = datetime.date.today().isoformat()
             
@@ -669,64 +812,96 @@ class GarminManager:
 
     def get_health_metrics(self, target_date=None):
         """
-        Fetches recovery and health metrics: Sleep Score, RHR, HRV.
+        Scans Garmin data with a 'Score Hunter' to find the sleep score in any nested field.
         """
         if not self.login():
             return None
         
-        if not target_date:
-            target_date = datetime.date.today().isoformat()
-            
-        try:
-            # 1. Get Sleep Data
-            sleep_data = self.client.get_sleep_data(target_date)
-            dto = sleep_data.get('dailySleepDTO', {})
-            
-            # Try multiple paths for sleep score
-            sleep_score = (
-                dto.get('sleepScore') or 
-                dto.get('overallScore') or 
-                sleep_data.get('sleepScores', {}).get('overall', {}).get('value')
-            )
-            
-            sleep_time_sec = dto.get('sleepTimeSeconds', 0)
-            
-            # 2. Get User Summary (contains RHR, Body Battery, Stress)
-            stats = self.client.get_user_summary(target_date)
-            rhr = stats.get('restingHeartRate')
-            body_battery = stats.get('bodyBatteryMostRecentValue') or stats.get('bodyBatteryHigh')
-            stress = stats.get('averageStressLevel')
-            
-            # Fallback for sleep score from summary
-            if not sleep_score:
-                sleep_score = stats.get('sleepScore')
-            
-            # 3. Get HRV (If available in summary)
-            hrv_val = None
+        today_dt = datetime.date.today()
+        dates_to_scan = [
+            target_date or today_dt.isoformat(),
+            (today_dt - datetime.timedelta(days=1)).isoformat(),
+            (today_dt - datetime.timedelta(days=2)).isoformat()
+        ]
+        
+        def score_hunter(obj):
+            """Recursively search for anything that looks like a sleep score (1-100)."""
+            if isinstance(obj, dict):
+                # Priority keys first
+                for p_key in ['sleepScore', 'overallScore', 'score', 'sleepScoreValue', 'value']:
+                    val = obj.get(p_key)
+                    if isinstance(val, (int, float)) and 1 <= val <= 100:
+                        return int(val)
+                # Recursive search
+                for k, v in obj.items():
+                    res = score_hunter(v)
+                    if res: return res
+            elif isinstance(obj, list):
+                for item in obj:
+                    res = score_hunter(item)
+                    if res: return res
+            return None
+
+        best_metrics = {
+            "date": dates_to_scan[0],
+            "sleep_score": None,
+            "sleep_hours": 0,
+            "rhr": None,
+            "hrv": None,
+            "body_battery": None,
+            "stress": None,
+            "readiness_score": None
+        }
+
+        for i, d in enumerate(dates_to_scan):
             try:
-                hrv_val = stats.get('hrvStatus', {}).get('lastNightAvg')
-            except: pass
-            
-            return {
-                "date": target_date,
-                "sleep_score": sleep_score,
-                "sleep_hours": round(sleep_time_sec / 3600.0, 1) if sleep_time_sec else 0,
-                "rhr": rhr,
-                "hrv": hrv_val,
-                "body_battery": body_battery,
-                "stress": stress,
-                "readiness_score": sleep_score or body_battery # Proxy for now
-            }
-        except Exception as e:
-            logger.error(f"Error fetching health metrics: {e}")
-            return {
-                "date": target_date,
-                "sleep_score": None,
-                "sleep_hours": 0,
-                "rhr": None,
-                "hrv": None,
-                "readiness_score": None
-            }
+                # Fetch Raw Data
+                sleep_raw = self.client.get_sleep_data(d)
+                stats = self.client.get_user_summary(d)
+                
+                # 1. HUNTER: Find Sleep Score anywhere in sleep_raw or stats
+                s_score = score_hunter(sleep_raw) or score_hunter(stats.get('sleepSummary')) or stats.get('sleepScore')
+                
+                # 2. Extract Duration
+                dto = sleep_raw.get('dailySleepDTO', {})
+                s_hrs = round(dto.get('sleepTimeSeconds', 0) / 3600.0, 1) if dto.get('sleepTimeSeconds') else 0
+
+                # 3. Standard Metrics
+                rhr = stats.get('restingHeartRate')
+                bb = stats.get('bodyBatteryMostRecentValue') or stats.get('bodyBatteryHigh')
+                stress = stats.get('averageStressLevel') or stats.get('allDayStress', {}).get('averageStressLevel')
+                
+                # 4. HRV
+                hrv = stats.get('hrvStatus', {}).get('lastNightAvg')
+                if hrv is None:
+                    try: hrv = self.client.get_hrv_data(d).get('hrvSummary', {}).get('lastNightAvg')
+                    except: pass
+
+                print(f"DEBUG: Hunter scan {d} -> Sleep={s_score}, HRV={hrv}, RHR={rhr}")
+
+                if i == 0:
+                    best_metrics.update({"sleep_score": s_score, "sleep_hours": s_hrs, "rhr": rhr, "hrv": hrv, "body_battery": bb, "stress": stress})
+                else:
+                    if best_metrics["sleep_score"] is None and s_score:
+                        best_metrics["sleep_score"] = s_score
+                        best_metrics["sleep_hours"] = s_hrs
+                        best_metrics["date"] += f" (Sleep from {d})"
+                    if best_metrics["hrv"] is None and hrv:
+                        best_metrics["hrv"] = hrv
+                        suffix = f" (HRV from {d})"
+                        if "(Sleep from" in best_metrics["date"]:
+                             best_metrics["date"] = best_metrics["date"].replace(")", f", {suffix.strip(' ()')})")
+                        else:
+                             best_metrics["date"] += suffix
+
+                if best_metrics["sleep_score"] and best_metrics["hrv"]:
+                    break
+
+            except Exception as e:
+                print(f"DEBUG: Error in hunter scan {d}: {e}")
+
+        best_metrics["readiness_score"] = best_metrics["sleep_score"] or best_metrics["body_battery"]
+        return best_metrics
 
     def get_recent_activities(self, days=14):
         """
@@ -750,6 +925,16 @@ class GarminManager:
                 start_time = act.get('startTimeLocal', '')
                 date_str = start_time.split(' ')[0]
                 
+                # Advanced Power Logic (Garmin stores power in various places)
+                avg_pwr = act.get('averagePower')
+                max_pwr = act.get('maxPower')
+                norm_pwr = act.get('normPower') or act.get('weightedAveragePower')
+                
+                # If null, check for 20M critical power or others as proxys
+                if not avg_pwr and ('cycl' in act.get('activityType', {}).get('typeKey', '').lower()):
+                     # Sometimes stored in connectIQ fields or different keys
+                     pass
+
                 processed.append({
                     "activityId": act.get('activityId'),
                     "name": act.get('activityName'),
@@ -758,13 +943,41 @@ class GarminManager:
                     "start_time": start_time,
                     "duration_min": round((act.get('duration', 0) or act.get('elapsedDuration', 0)) / 60.0, 1),
                     "distance_km": round((act.get('distance', 0) or 0) / 1000.0, 2),
-                    "training_load": act.get('trainingLoad'),
+                    
+                    # Heart Rate
                     "avg_hr": act.get('averageHR'),
                     "max_hr": act.get('maxHR'),
-                    "avg_power": act.get('averagePower'),
-                    "max_power": act.get('maxPower'),
-                    "weighted_avg_power": act.get('weightedAveragePower'),
-                    "calories": act.get('calories')
+                    
+                    # Power & Load
+                    "avg_power": avg_pwr,
+                    "max_power": max_pwr,
+                    "norm_power": norm_pwr,
+                    "pss": act.get('trainingStressScore'), # TSS
+                    "if": act.get('intensityFactor'),
+                    "training_load": act.get('trainingLoad'),
+                    
+                    # Speed & Pace
+                    "avg_speed": act.get('averageSpeed'), # m/s
+                    "max_speed": act.get('maxSpeed'),
+                    
+                    # Cycling Specific
+                    "avg_cadence": act.get('averageBikingCadenceInRevPerMinute'),
+                    
+                    # Running Specific
+                    "avg_run_cadence": act.get('averageRunningCadenceInStepsPerMinute'),
+                    "avg_stride_len": act.get('avgStrideLength'),
+                    "vertical_osc": act.get('avgVerticalOscillation'),
+                    "gct": act.get('avgGroundContactTime'),
+                    
+                    # Swim Specific
+                    "avg_swolf": act.get('averageSwolf'),
+                    "avg_stroke_rate": act.get('averageStrokeRate'),
+                    "total_strokes": act.get('totalStrokes'),
+                    
+                    "calories": act.get('calories'),
+                    "aerobic_te": act.get('aerobicTrainingEffect'),
+                    "anaerobic_te": act.get('anaerobicTrainingEffect'),
+                    "v02_max_est": act.get('vO2MaxValue')
                 })
             
             return processed

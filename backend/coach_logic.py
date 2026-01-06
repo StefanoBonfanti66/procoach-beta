@@ -26,6 +26,9 @@ class CoachLogic:
         run_thresh = user_profile.get("running_threshold")
         hr_max = user_profile.get("hr_max")
         
+        # BRIDGE: Extract insights from AI Coach if available
+        ai_insights = user_profile.get("ai_insights", "")
+        
         prompt = f"""
 SEI UN COACH DI TRIATHLON DI LIVELLO AVANZATO.
 Il tuo compito è creare un piano di allenamento strutturato per:
@@ -44,6 +47,9 @@ DATI FISIOLOGICI ATTUALI
 - CSS (Nuoto): {css} sec/100m
 - Soglia Corsa: {run_thresh} min/km
 - FC Max: {hr_max} bpm
+
+DIRETTIVE REATTIVE DALL'AI COACH (IMPORTANTE):
+{ai_insights if ai_insights else "Nessuna direttiva specifica. Segui i principi standard di programmazione."}
 
 DISPONIBILITÀ ORARIA (Minuti per giorno)
 - Lun: {availability.get('Mon', 0)} min
@@ -513,6 +519,7 @@ IMPORTANTE:
                 "note": motivational_note
             }
 
+        # --- STANDARD PLAN GENERATION LOOP ---
         for w in range(1, weeks + 1):
             phase = phases[w-1]
             days_data = {}
@@ -537,6 +544,77 @@ IMPORTANTE:
                 week_payload["coach_note"] = reactive_note
                 
             plan_weeks.append(week_payload)
+
+        # --- REACTIVE OVERRIDE ENGINE (The "Proactive" logic) ---
+        # "Se faccio un allenamento intenso ed il coach vede che ne sono uscito stravolto..."
+        
+        # 1. Identify "Exhaustion" State
+        is_exhausted = False
+        exhaustion_reason = []
+        
+        # Check Health Metrics (Objective Recover)
+        if health:
+            bb = health.get("body_battery", 100) or 100
+            sleep = health.get("sleep_score", 100) or 100
+            
+            if bb < 35:
+                is_exhausted = True
+                exhaustion_reason.append(f"Body Battery critica ({bb}/100)")
+            elif sleep < 50:
+                is_exhausted = True
+                exhaustion_reason.append(f"Sonno insufficiente ({sleep}/100)")
+                
+        # Check Recent Activity Intensity (Acute Load)
+        last_hard_activity = None
+        if recent_acts:
+            # Sort by date descending
+            sorted_acts = sorted(recent_acts, key=lambda x: str(x.get('startTimeLocal', '')), reverse=True)
+            if sorted_acts:
+                last_act = sorted_acts[0]
+                # Check for high internal load (e.g. high HR for long duration)
+                # Use (val or 0) to safely handle None
+                avg_hr = last_act.get('averageHeartRate') or 0
+                dur = (last_act.get('duration') or 0) / 60 # min
+                
+                # Simple threshold: HR > 160 for > 40 mins OR Any activity > 2 hours
+                if (avg_hr > 160 and dur > 40) or (dur > 120):
+                    # Potential fatigue source
+                    if is_exhausted: # Confirmatory
+                        exhaustion_reason.append(f"recupero post-{last_act.get('activityName', 'allenamento')}")
+                    else:
+                        # Even if metrics are ok, checking if it was REALLY hard
+                        if avg_hr > 170 and dur > 60:
+                            is_exhausted = True
+                            exhaustion_reason.append("carico cardiaco eccessivo ieri")
+
+        # 2. Apply Proactive Modification to Week 1
+        if is_exhausted and plan_weeks:
+            week1 = plan_weeks[0]
+            days = week1["days"]
+            # Find the first non-rest day to modify
+            # Assuming we are generating for the week starting today/tomorrow
+            for d_name, w_data in days.items():
+                if w_data["activity"] != "Rest" and w_data["activity"] != "Rest Day":
+                    # MODIFY THIS WORKOUT
+                    original_type = w_data["activity"]
+                    
+                    # Downgrade Logic
+                    w_data["activity"] = "Recovery Run" if w_data["sport_type"] == "run" else ("Recovery Ride" if w_data["sport_type"] == "bike" else "Easy Swim")
+                    w_data["intensity"] = "Low"
+                    w_data["duration"] = max(30, int(w_data["duration"] * 0.6))
+                    w_data["steps"] = [{
+                        "description": f"Recupero Attivo (modificato da {original_type})",
+                        "duration_min": w_data["duration"],
+                        "type": "RECOVERY",
+                        "pace_ms": None,
+                        "power_watts": int(ftp * 0.55) if w_data["sport_type"] == "bike" else None
+                    }]
+                    
+                    # Add Proactive Note
+                    reason_str = ", ".join(exhaustion_reason)
+                    week1["coach_note"] = f"🛑 ANTIGRAVITY INTERVENTION: Ho rilevato {reason_str}. Ho trasformato l'allenamento di {d_name} in una sessione di recupero per evitare il sovrallenamento."
+                    week1["proactive_modification"] = True
+                    break # Only modify the immediate next one
 
         return {"weeks": plan_weeks}
 

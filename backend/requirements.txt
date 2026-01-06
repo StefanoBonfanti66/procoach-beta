@@ -12,3 +12,5 @@ python-multipart
 python-jose[cryptography]
 httpx
 email-validator
+openai
+google-generativeai

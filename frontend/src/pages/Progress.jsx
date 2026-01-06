@@ -19,7 +19,8 @@ import {
     CheckCircle2,
     Footprints,
     Bike,
-    Waves
+    Waves,
+    Trophy
 } from 'lucide-react';
 import {
     AreaChart,
@@ -64,7 +65,8 @@ const Progress = () => {
     const [stats, setStats] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [timeRange, setTimeRange] = useState('30D');
-
+    const [challenges, setChallenges] = useState([]);
+    const [performanceHistory, setPerformanceHistory] = useState([]);
     const [healthStats, setHealthStats] = useState(null);
     const [complianceAnalysis, setComplianceAnalysis] = useState(null);
     const [error, setError] = useState(null);
@@ -91,6 +93,19 @@ const Progress = () => {
             if (healthRes.ok) {
                 const healthData = await healthRes.json();
                 setHealthStats(healthData);
+            }
+
+            // Fetch Challenges & Performance
+            const chalRes = await fetch(`/api/user/challenges/${email}`);
+            if (chalRes.ok) {
+                const chalData = await chalRes.json();
+                setChallenges(chalData);
+            }
+
+            const perfRes = await fetch(`/api/user/performance-history/${email}`);
+            if (perfRes.ok) {
+                const perfData = await perfRes.json();
+                setPerformanceHistory(perfData);
             }
 
             // Fetch Compliance/Coach Feedback
@@ -130,23 +145,30 @@ const Progress = () => {
         if (!healthStats) return "Sincronizzando i dati di recupero...";
 
         const sleep = healthStats.sleep_hours || 0;
-        const score = healthStats.sleep_score || 0;
+        const score = healthStats.sleep_score; // Mantieni null se è null
         const bb = healthStats.body_battery || 50;
         const tsb = stats?.current?.form || 0;
 
         let message = "";
         let advice = "";
 
-        // 1. Sleey Analysis
-        if (sleep < 6) {
+        if (sleep === 0 && score === null) {
+            return "Dati di recupero non ancora disponibili per oggi. Sincronizza il tuo Garmin.";
+        }
+
+        // 1. Sleep Analysis
+        if (sleep > 0 && sleep < 6) {
             message = `Sonno insufficiente (${sleep}h). Il sistema nervoso centrale non ha recuperato a sufficienza.`;
-            advice = "Oggi evita lavori di alta intensità o tecnica complessa.";
-        } else if (score < 60) {
-            message = "Qualità del sonno scarsa nonostante la durata.";
-            advice = "Monitora la frequenza cardiaca: se è più alta del normale, trasforma la sessione in scarico.";
-        } else {
+            advice = "Oggi evita lavori di alta intensità.";
+        } else if (score !== null && score < 60) {
+            message = "Qualità del sonno migliorabile rispetto alla durata.";
+            advice = "Monitora l'HRV: se è basso, trasforma la sessione in scarico.";
+        } else if (score !== null && score >= 60) {
             message = "Recupero notturno ottimale.";
-            advice = tsb >= 0 ? "Ottimo giorno per un lavoro di qualità." : "Il tuo corpo è pronto, ma il carico cronico è alto: segui il piano senza strafare.";
+            advice = tsb >= 0 ? "Ottimo giorno per un lavoro di qualità." : "Il tuo corpo è pronto, ma il carico cronico è alto.";
+        } else {
+            message = "Dati del sonno in fase di analisi.";
+            advice = "Basati sul tuo Body Battery per l'allenamento di oggi.";
         }
 
         // 2. Body Battery & Stress overrides
@@ -383,188 +405,180 @@ const Progress = () => {
                             </div>
                         </div>
 
-                        {/* Recovery Hub */}
-                        <div className="glass-card p-8 rounded-[40px] border border-white/5 bg-[#12141c]/40 relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/10 blur-[60px] rounded-full pointer-events-none" />
-                            <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                                <Award size={18} className="text-purple-400" />
-                                Recovery Hub
+                    </div>
+
+                    {/* Challenges & Gamification Section */}
+                    <div className="glass-card p-8 rounded-[40px] border border-white/5 bg-[#12141c]/40">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                                <Trophy size={18} className="text-amber-400" />
+                                Missions & Trophies
                             </h3>
-
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                                    <p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">Dormito</p>
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-xl font-black text-white italic">{healthStats?.sleep_hours || '0'}</span>
-                                        <span className="text-xs text-gray-500">ore</span>
-                                    </div>
-                                </div>
-                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                                    <p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">Sleep Score</p>
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-xl font-black text-emerald-400 italic">{healthStats?.sleep_score || '--'}</span>
-                                        <span className="text-xs text-gray-500">/100</span>
-                                    </div>
-                                </div>
-                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                                    <p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">HRV Avg</p>
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-xl font-black text-white italic">{healthStats?.hrv || '--'}</span>
-                                        <span className="text-xs text-gray-500">ms</span>
-                                    </div>
-                                </div>
-                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                                    <p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">RHR</p>
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-xl font-black text-white italic">{healthStats?.rhr || '--'}</span>
-                                        <span className="text-xs text-gray-500">bpm</span>
-                                    </div>
-                                </div>
-                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                                    <p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">Body Battery</p>
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-xl font-black text-blue-400 italic">{healthStats?.body_battery || '--'}</span>
-                                        <span className="text-xs text-gray-500">/100</span>
-                                    </div>
-                                </div>
-                                <div className="p-4 bg-white/5 rounded-2xl border border-white/5">
-                                    <p className="text-[10px] text-gray-500 uppercase font-black tracking-widest mb-1">Stress</p>
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-xl font-black text-orange-400 italic">{healthStats?.stress || '--'}</span>
-                                        <span className="text-xs text-gray-500">avg</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mt-6 p-4 bg-purple-500/5 rounded-2xl border border-purple-500/20">
-                                <div className="flex items-start gap-3">
-                                    <Info size={16} className="text-purple-400 mt-0.5 shrink-0" />
-                                    <p className="text-xs text-purple-200/70 leading-relaxed italic">
-                                        {recoveryInsight}
-                                    </p>
-                                </div>
+                            <div className="flex items-center gap-2">
+                                <span className="text-[10px] bg-amber-400/10 text-amber-400 px-3 py-1 rounded-full font-black uppercase tracking-widest">
+                                    {challenges.filter(c => c.status === 'completed').length} Earned
+                                </span>
                             </div>
                         </div>
 
-                        {/* Future Load Predictor */}
-                        <div className="glass-card p-8 rounded-[40px] border border-white/5 bg-gradient-to-br from-[#12141c] to-[#0a0c10]">
-                            <div className="flex items-center gap-3 mb-6">
-                                <Monitor className="text-blue-500" size={24} />
-                                <h3 className="text-lg font-bold text-white leading-tight">Predictive Insight</h3>
-                            </div>
-                            <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                                Basandoti sul piano attuale, raggiungerai il picco di forma (Fitness {Math.round((stats?.current?.fitness || 0) * 1.1)}) tra <span className="text-white font-bold underline decoration-blue-500 underline-offset-4">12 giorni</span>.
-                                Il rischio di overtraining è attualmente <span className="text-emerald-400 font-bold uppercase tracking-wider text-xs">Molto Basso</span>.
-                            </p>
-                            <button className="w-full py-4 bg-white/5 hover:bg-white/10 rounded-2xl text-xs font-black uppercase tracking-widest text-white transition-all border border-white/10">
-                                Vedi Report IA
-                            </button>
+                        <div className="space-y-4">
+                            {challenges.length > 0 ? challenges.map((ch) => (
+                                <div key={ch.id} className={`p-5 rounded-3xl border transition-all duration-300 ${ch.status === 'completed' ? 'bg-amber-400/5 border-amber-400/20 shadow-[0_0_20px_rgba(251,191,36,0.05)]' : 'bg-white/5 border-white/5 hover:border-white/10'}`}>
+                                    <div className="flex items-center gap-4 mb-4">
+                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${ch.status === 'completed' ? 'bg-amber-400 text-black' : 'bg-white/5 text-gray-500'}`}>
+                                            {ch.status === 'completed' ? <Award size={20} /> : <Target size={20} />}
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="flex items-center justify-between">
+                                                <h4 className="text-sm font-bold text-white leading-none">{ch.title}</h4>
+                                                <span className="text-[10px] font-black text-amber-400 uppercase">+{ch.xp} XP</span>
+                                            </div>
+                                            <p className="text-[10px] text-gray-500 mt-1 font-medium">{ch.description}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-1.5">
+                                        <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest">
+                                            <span className="text-gray-500">Progress</span>
+                                            <span className="text-white">{Math.min(100, Math.round((ch.current_value / ch.target_value) * 100))}%</span>
+                                        </div>
+                                        <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                                            <div
+                                                className={`h-full rounded-full transition-all duration-1000 ${ch.status === 'completed' ? 'bg-amber-400' : 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.3)]'}`}
+                                                style={{ width: `${Math.min(100, (ch.current_value / ch.target_value) * 100)}%` }}
+                                            />
+                                        </div>
+                                        <p className="text-[9px] text-gray-600 font-mono text-right mt-1">
+                                            {ch.current_value.toFixed(1)} / {ch.target_value} {ch.metric?.includes('session') ? 'SES' : 'KM/UNIT'}
+                                        </p>
+                                    </div>
+                                </div>
+                            )) : (
+                                <div className="py-10 text-center border-2 border-dashed border-white/5 rounded-3xl">
+                                    <p className="text-gray-600 text-xs font-bold uppercase tracking-widest">Analisi Obiettivi IA in corso...</p>
+                                </div>
+                            )}
                         </div>
                     </div>
-                </div>
 
-                {/* Execution & Coach Technical Feedback Section (Full Width) */}
-                <section className="mt-12">
-                    <div className="flex items-center justify-between mb-8">
-                        <div>
-                            <h2 className="text-2xl font-black text-white italic flex items-center gap-3">
-                                <CheckCircle2 className="text-emerald-500" size={28} />
-                                ANALISI ESECUZIONE ALLENAMENTI
-                            </h2>
-                            <p className="text-gray-500 text-sm mt-1">Feedback tecnico dettagliato per ogni attività registrata su Garmin</p>
+                    {/* Future Load Predictor */}
+                    <div className="glass-card p-8 rounded-[40px] border border-white/5 bg-gradient-to-br from-[#12141c] to-[#0a0c10]">
+                        <div className="flex items-center gap-3 mb-6">
+                            <Monitor className="text-blue-500" size={24} />
+                            <h3 className="text-lg font-bold text-white leading-tight">Predictive Insight</h3>
                         </div>
-                        <button
-                            onClick={fetchData}
-                            disabled={isLoading}
-                            className="flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 rounded-2xl text-xs font-black uppercase tracking-widest text-white transition-all border border-white/10 disabled:opacity-50 group"
-                        >
-                            <RefreshCw className={`w-4 h-4 text-emerald-400 ${isLoading ? 'animate-spin' : 'group-hover:rotate-180 transition-transform duration-500'}`} />
-                            {isLoading ? 'Sincronizzazione...' : 'Sincronizza'}
+                        <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                            Basandoti sul piano attuale, raggiungerai il picco di forma (Fitness {Math.round((stats?.current?.fitness || 0) * 1.1)}) tra <span className="text-white font-bold underline decoration-blue-500 underline-offset-4">12 giorni</span>.
+                            Il rischio di overtraining è attualmente <span className="text-emerald-400 font-bold uppercase tracking-wider text-xs">Molto Basso</span>.
+                        </p>
+                        <button className="w-full py-4 bg-white/5 hover:bg-white/10 rounded-2xl text-xs font-black uppercase tracking-widest text-white transition-all border border-white/10">
+                            Vedi Report IA
                         </button>
                     </div>
+                </div>
+            </div>
 
-                    <div className="grid grid-cols-1 gap-4">
-                        {complianceAnalysis?.all_activities_feedback?.map((activity, idx) => {
-                            const actType = (activity.type || "").toLowerCase();
-                            const actName = activity.name || "Attività senza nome";
+            {/* Execution & Coach Technical Feedback Section (Full Width) */}
+            <section className="mt-12">
+                <div className="flex items-center justify-between mb-8">
+                    <div>
+                        <h2 className="text-2xl font-black text-white italic flex items-center gap-3">
+                            <CheckCircle2 className="text-emerald-500" size={28} />
+                            ANALISI ESECUZIONE ALLENAMENTI
+                        </h2>
+                        <p className="text-gray-500 text-sm mt-1">Feedback tecnico dettagliato per ogni attività registrata su Garmin</p>
+                    </div>
+                    <button
+                        onClick={fetchData}
+                        disabled={isLoading}
+                        className="flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 rounded-2xl text-xs font-black uppercase tracking-widest text-white transition-all border border-white/10 disabled:opacity-50 group"
+                    >
+                        <RefreshCw className={`w-4 h-4 text-emerald-400 ${isLoading ? 'animate-spin' : 'group-hover:rotate-180 transition-transform duration-500'}`} />
+                        {isLoading ? 'Sincronizzazione...' : 'Sincronizza'}
+                    </button>
+                </div>
 
-                            return (
-                                <div key={idx} className="glass-card p-6 rounded-3xl border border-white/5 bg-white/5 hover:bg-white/[0.07] transition-all group">
-                                    <div className="flex flex-col md:flex-row gap-6">
-                                        {/* Left: Activity Summary */}
-                                        <div className="md:w-64 shrink-0">
-                                            <div className="flex items-center gap-3 mb-3">
-                                                <div className={`p-2 rounded-xl ${actType.includes('run') ? 'bg-orange-500/10 text-orange-400' :
-                                                    actType.includes('cycl') || actType.includes('bike') ? 'bg-emerald-500/10 text-emerald-400' :
-                                                        'bg-blue-500/10 text-blue-400'
-                                                    }`}>
-                                                    {actType.includes('run') ? <Footprints size={20} /> :
-                                                        actType.includes('cycl') || actType.includes('bike') ? <Bike size={20} /> :
-                                                            <Waves size={20} />}
-                                                </div>
-                                                <div>
-                                                    <h4 className="text-white font-bold leading-none">{actName}</h4>
-                                                    <span className="text-[10px] text-gray-500 font-mono uppercase">{activity.date}</span>
-                                                </div>
+                <div className="grid grid-cols-1 gap-4">
+                    {complianceAnalysis?.all_activities_feedback?.map((activity, idx) => {
+                        const actType = (activity.type || "").toLowerCase();
+                        const actName = activity.name || "Attività senza nome";
+
+                        return (
+                            <div key={idx} className="glass-card p-6 rounded-3xl border border-white/5 bg-white/5 hover:bg-white/[0.07] transition-all group">
+                                <div className="flex flex-col md:flex-row gap-6">
+                                    {/* Left: Activity Summary */}
+                                    <div className="md:w-64 shrink-0">
+                                        <div className="flex items-center gap-3 mb-3">
+                                            <div className={`p-2 rounded-xl ${actType.includes('run') ? 'bg-orange-500/10 text-orange-400' :
+                                                actType.includes('cycl') || actType.includes('bike') ? 'bg-emerald-500/10 text-emerald-400' :
+                                                    'bg-blue-500/10 text-blue-400'
+                                                }`}>
+                                                {actType.includes('run') ? <Footprints size={20} /> :
+                                                    actType.includes('cycl') || actType.includes('bike') ? <Bike size={20} /> :
+                                                        <Waves size={20} />}
                                             </div>
-                                            <div className="grid grid-cols-2 gap-2">
-                                                <div className="bg-black/20 p-2 rounded-lg">
-                                                    <p className="text-[8px] text-gray-500 uppercase font-bold">Durata</p>
-                                                    <p className="text-sm font-mono text-white">{Math.round(activity.duration || 0)}′</p>
-                                                </div>
-                                                <div className="bg-black/20 p-2 rounded-lg">
-                                                    <p className="text-[8px] text-gray-500 uppercase font-bold">HR Avg</p>
-                                                    <p className="text-sm font-mono text-white">{Math.round(activity.avg_hr) || '--'}</p>
-                                                </div>
+                                            <div>
+                                                <h4 className="text-white font-bold leading-none">{actName}</h4>
+                                                <span className="text-[10px] text-gray-500 font-mono uppercase">{activity.date}</span>
                                             </div>
                                         </div>
-
-                                        {/* Right: Coach Technical Opinion */}
-                                        <div className="flex-1 border-l border-white/5 md:pl-8">
-                                            <div className="flex items-center gap-2 mb-2">
-                                                <MessageSquare size={14} className="text-blue-400" />
-                                                <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">Feedback Tecnico Coach</span>
-                                                {activity.is_extra && (
-                                                    <span className="ml-auto text-[9px] bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded-full font-bold uppercase tracking-tighter">
-                                                        Fuori Programma
-                                                    </span>
-                                                )}
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <div className="bg-black/20 p-2 rounded-lg">
+                                                <p className="text-[8px] text-gray-500 uppercase font-bold">Durata</p>
+                                                <p className="text-sm font-mono text-white">{Math.round(activity.duration || 0)}′</p>
                                             </div>
-                                            <p className="text-sm text-gray-300 italic leading-relaxed font-medium">
-                                                "{activity.opinion}"
-                                            </p>
-
-                                            {activity.avg_power > 0 && (
-                                                <div className="mt-4 flex items-center gap-4">
-                                                    <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 bg-emerald-400/5 px-2 py-1 rounded-md border border-emerald-400/10">
-                                                        <Zap size={10} />
-                                                        POTENZA MEDIA: {Math.round(activity.avg_power)}W
-                                                    </div>
-                                                </div>
-                                            )}
+                                            <div className="bg-black/20 p-2 rounded-lg">
+                                                <p className="text-[8px] text-gray-500 uppercase font-bold">HR Avg</p>
+                                                <p className="text-sm font-mono text-white">{Math.round(activity.avg_hr) || '--'}</p>
+                                            </div>
                                         </div>
                                     </div>
+
+                                    {/* Right: Coach Technical Opinion */}
+                                    <div className="flex-1 border-l border-white/5 md:pl-8">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <MessageSquare size={14} className="text-blue-400" />
+                                            <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest">Feedback Tecnico Coach</span>
+                                            {activity.is_extra && (
+                                                <span className="ml-auto text-[9px] bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded-full font-bold uppercase tracking-tighter">
+                                                    Fuori Programma
+                                                </span>
+                                            )}
+                                        </div>
+                                        <p className="text-sm text-gray-300 italic leading-relaxed font-medium">
+                                            "{activity.opinion}"
+                                        </p>
+
+                                        {activity.avg_power > 0 && (
+                                            <div className="mt-4 flex items-center gap-4">
+                                                <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-400 bg-emerald-400/5 px-2 py-1 rounded-md border border-emerald-400/10">
+                                                    <Zap size={10} />
+                                                    POTENZA MEDIA: {Math.round(activity.avg_power)}W
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
-                            );
-                        })}
-
-                        {isLoading && !complianceAnalysis && (
-                            <div className="text-center py-20 bg-white/5 rounded-[40px] border border-dashed border-white/10">
-                                <RefreshCw className="mx-auto text-gray-600 mb-4 animate-spin" size={32} />
-                                <p className="text-gray-400 font-medium">Sincronizzazione attività da Garmin...</p>
                             </div>
-                        )}
+                        );
+                    })}
 
-                        {!isLoading && (!complianceAnalysis?.all_activities_feedback || complianceAnalysis.all_activities_feedback.length === 0) && !error && (
-                            <div className="text-center py-20 bg-white/5 rounded-[40px] border border-dashed border-white/10">
-                                <Calendar className="mx-auto text-gray-400 mb-4 opacity-20" size={32} />
-                                <p className="text-gray-400 font-medium">Nessuna attività registrata negli ultimi 30 giorni.</p>
-                                <p className="text-gray-600 text-xs mt-1">Le tue attività Garmin appariranno qui automaticamente.</p>
-                            </div>
-                        )}
-                    </div>
-                </section>
-            </div>
+                    {isLoading && !complianceAnalysis && (
+                        <div className="text-center py-20 bg-white/5 rounded-[40px] border border-dashed border-white/10">
+                            <RefreshCw className="mx-auto text-gray-600 mb-4 animate-spin" size={32} />
+                            <p className="text-gray-400 font-medium">Sincronizzazione attività da Garmin...</p>
+                        </div>
+                    )}
+
+                    {!isLoading && (!complianceAnalysis?.all_activities_feedback || complianceAnalysis.all_activities_feedback.length === 0) && !error && (
+                        <div className="text-center py-20 bg-white/5 rounded-[40px] border border-dashed border-white/10">
+                            <Calendar className="mx-auto text-gray-400 mb-4 opacity-20" size={32} />
+                            <p className="text-gray-400 font-medium">Nessuna attività registrata negli ultimi 30 giorni.</p>
+                            <p className="text-gray-600 text-xs mt-1">Le tue attività Garmin appariranno qui automaticamente.</p>
+                        </div>
+                    )}
+                </div>
+            </section>
         </div>
     );
 };
