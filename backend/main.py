@@ -78,6 +78,23 @@ class UserProfileSchema(BaseModel):
 async def root():
     return {"message": "Triathlon Coach API is running"}
 
+@app.get("/api/health")
+async def health_check(db: Session = Depends(get_db)):
+    try:
+        # Simple query to check DB
+        db.execute("SELECT 1")
+        return {
+            "status": "healthy",
+            "database": "connected",
+            "environment": os.getenv("DATABASE_URL", "sqlite").split(":")[0]
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "database": "error",
+            "detail": str(e)
+        }
+
 @app.post("/api/user/sync-metrics")
 async def sync_metrics(credentials: Dict[str, str], db: Session = Depends(get_db)):
     try:
