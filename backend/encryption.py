@@ -5,19 +5,17 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# We need a master key. If not in env, we use a fallback (not ideal for production, but better than plain text)
-# In production (Render), the user should set ENCRYPTION_KEY in environment variables.
+# We need a master key. If not in env, we use a fallback (not ideal for production)
 SECRET_KEY = os.getenv("ENCRYPTION_KEY")
 
 if not SECRET_KEY:
-    # Generate a fixed key based on some project string if we really have to, 
-    # but it's better to warn or provide a way to generate one.
-    # For now, let's use a hardcoded fallback for local dev if missing, 
-    # but we'll tell the user to set a real one.
-    SECRET_KEY = b'v-9R_O6_x-Z3G2Z3c3V6Y2Vyc2lvbg==' # Static fallback for dev
+    # A valid 32-byte base64 encoded key for local development
+    SECRET_KEY = "IJe3RwfQ1Hqx3zJp8k10lyQ2f1P_fsFFnrwl75QCAC4="
 
 def get_fernet():
-    return Fernet(SECRET_KEY)
+    # Fernet requires bytes
+    key = SECRET_KEY.encode() if isinstance(SECRET_KEY, str) else SECRET_KEY
+    return Fernet(key)
 
 def encrypt_password(password: str) -> str:
     if not password:
