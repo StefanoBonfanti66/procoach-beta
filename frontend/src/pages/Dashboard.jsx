@@ -22,6 +22,21 @@ const Dashboard = () => {
                 setUserEmail(email);
                 console.log("Fetching plan for:", email);
                 try {
+                    // 1. Try to fetch existing plan first
+                    const existingRes = await fetch(`/api/user/training-plan/${email}`);
+                    if (existingRes.ok) {
+                        const existingData = await existingRes.json();
+                        if (existingData && existingData.weeks) {
+                            console.log("Existing plan recovered from DB");
+                            setFullPlan(existingData.weeks);
+                            analyzeCompliance(email, existingData.weeks);
+                            fetchRecentActivities(email);
+                            return; // Stop here if plan exists
+                        }
+                    }
+
+                    // 2. If no plan exists, generate a new one
+                    console.log("No plan found, generating new one...");
                     const response = await fetch('/api/user/generate-plan', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -31,14 +46,11 @@ const Dashboard = () => {
                     if (response.ok) {
                         const data = await response.json();
                         setFullPlan(data.plan);
-
-                        // After plan is loaded, trigger analysis
                         analyzeCompliance(email, data.plan);
                     } else {
                         console.error("Plan Generation Failed");
                     }
 
-                    // Fetch completed activities
                     fetchRecentActivities(email);
                 } catch (e) {
                     console.error("Network Error:", e);

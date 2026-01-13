@@ -143,9 +143,38 @@ IMPORTANTE:
         }
         vol_mult = dist_multipliers.get(race_dist, 1.0)
         
-        weeks = 12
+        # Calculate weeks to race dynamically
+        race_date_str = user_profile.get("race_date")
+        weeks_to_race = 12 # default fallback
+        
+        if race_date_str:
+            try:
+                # Use today's date to find the next Monday (start of the plan)
+                today = datetime.date.today()
+                start_of_plan = today
+                while start_of_plan.weekday() != 0:
+                    start_of_plan += datetime.timedelta(days=1)
+                
+                race_date = datetime.date.fromisoformat(race_date_str)
+                days_diff = (race_date - start_of_plan).days
+                if days_diff > 0:
+                    weeks_to_race = max(2, (days_diff // 7) + 1)
+                    print(f"DEBUG: Calculated {weeks_to_race} weeks until race on {race_date_str}")
+            except Exception as e:
+                print(f"DEBUG: Race date calculation error: {e}")
+
+        weeks = weeks_to_race
         plan_weeks = []
-        phases = ["BASE"] * 4 + ["BUILD"] * 4 + ["PEAK"] * 2 + ["RACE"] * 1 + ["RECOVERY"] * 1
+        
+        # Scaling phases to the actual number of weeks
+        if weeks >= 12:
+            phases = ["BASE"] * (weeks // 3) + ["BUILD"] * (weeks // 3) + ["PEAK"] * (weeks - 2 * (weeks // 3) - 2) + ["RACE"] * 1 + ["RECOVERY"] * 1
+        elif weeks >= 8:
+             phases = ["BASE"] * 2 + ["BUILD"] * 3 + ["PEAK"] * (weeks - 7) + ["RACE"] * 1 + ["RECOVERY"] * 1
+        else:
+             phases = ["BUILD"] * (weeks - 2) + ["PEAK"] * 1 + ["RACE"] * 1
+             if weeks < len(phases): phases = phases[:weeks]
+             elif weeks > len(phases): phases = ["BASE"] * (weeks - len(phases)) + phases
         
         # --- REACTIVE ENGINE ---
         health = user_profile.get("health_metrics")

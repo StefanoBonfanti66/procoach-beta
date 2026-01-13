@@ -93,6 +93,15 @@ class ChatMessage(Base):
     timestamp = Column(String)
     msg_metadata = Column(JSON) # For storing context, actions taken, etc.
 
+class TrainingPlan(Base):
+    __tablename__ = "training_plans"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    user_email = Column(String, index=True)
+    plan_data = Column(JSON)
+    created_at = Column(String)
+    is_active = Column(Integer, default=1)
+
 Base.metadata.create_all(bind=engine)
 
 
@@ -141,6 +150,7 @@ def migrate_db():
         
         # Ensure new tables are created as well
         Base.metadata.create_all(bind=engine)
+        print("MIGRATION: All tables verified/created.")
 
 def get_db():
     db = SessionLocal()

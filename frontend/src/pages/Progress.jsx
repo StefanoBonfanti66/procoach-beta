@@ -109,8 +109,24 @@ const Progress = () => {
             }
 
             // Fetch Compliance/Coach Feedback
-            const planRaw = localStorage.getItem('training_plan');
-            const plan = planRaw ? JSON.parse(planRaw) : [];
+            let planRaw = localStorage.getItem('training_plan');
+            let planObj = planRaw ? JSON.parse(planRaw) : null;
+            let plan = (planObj && planObj.weeks) ? planObj.weeks : [];
+
+            // If no plan in localStorage, try fetching from backend
+            if (plan.length === 0) {
+                try {
+                    const planRes = await fetch(`/api/user/training-plan/${email}`);
+                    if (planRes.ok) {
+                        const planData = await planRes.json();
+                        if (planData && planData.weeks) {
+                            plan = planData.weeks;
+                            localStorage.setItem('training_plan', JSON.stringify(planData));
+                            console.log("Plan recovered from server storage");
+                        }
+                    }
+                } catch (e) { console.error("Could not recover plan:", e); }
+            }
 
             const compRes = await fetch('/api/user/analyze-compliance', {
                 method: 'POST',

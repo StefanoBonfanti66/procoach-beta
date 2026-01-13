@@ -1,8 +1,9 @@
 from fastapi import FastAPI, HTTPException, Depends
+from encryption import encrypt_password, decrypt_password
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
-from database import SessionLocal, engine, User, get_db, ChatMessage
+from database import SessionLocal, engine, User, get_db, ChatMessage, TrainingPlan
 from challenge_logic import ChallengeLogic
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
@@ -168,7 +169,7 @@ async def update_profile(profile: UserProfileSchema, db: Session = Depends(get_d
         db_user.pool_length = profile.pool_length
         
         if profile.password:
-            db_user.hashed_password = profile.password
+            db_user.hashed_password = encrypt_password(profile.password)
             
         db.commit()
         db.refresh(db_user)
@@ -216,7 +217,7 @@ async def get_profile(email: str, db: Session = Depends(get_db)):
         "availability": db_user.availability or {},
         "habits": db_user.habits or {},
         "pool_length": db_user.pool_length or 25.0,
-        "password": db_user.hashed_password # For internal sync simplicity in this dev phase
+        "password": decrypt_password(db_user.hashed_password) # Decrypt for the UI if needed
     }
 
 @app.get("/api/user/training-stats/{email}")
@@ -306,9 +307,9 @@ async def generate_plan(payload: Dict[str, str], db: Session = Depends(get_db)):
             print(f"DEBUG: Could not fetch reactive data: {e}")
 
     # 3. BRIDGE: Fetch latest AI Coach insights from chat history
+    # 3. Fetch AI Coach Insights for Planning
     ai_insights = ""
     try:
-        from models import ChatMessage
         last_coach_msgs = db.query(ChatMessage).filter(
             ChatMessage.user_email == email,
             ChatMessage.role == "assistant"
@@ -358,8 +359,24 @@ async def generate_plan(payload: Dict[str, str], db: Session = Depends(get_db)):
         week["start_date"] = week_start.isoformat()
         week["end_date"] = week_end.isoformat()
         final_plan_weeks.append(week)
-        
-    return {"status": "success", "plan": final_plan_weeks}
+    
+    plan_structure["weeks"] = final_plan_weeks
+    
+    # 5. Save to DB
+    from datetime import datetime as dt
+    # Deactivate old plans
+    db.query(TrainingPlan).filter(TrainingPlan.user_email == email).update({"is_active": 0})
+    
+    new_plan_row = TrainingPlan(
+        user_email=email,
+        plan_data=plan_structure,
+        created_at=dt.now().isoformat(),
+        is_active=1
+    )
+    db.add(new_plan_row)
+    db.commit()
+    
+    return plan_structure
 
 @app.post("/api/user/sync-calendar")
 async def sync_calendar(payload: Dict[str, Any], db: Session = Depends(get_db)):
@@ -481,15 +498,35 @@ async def sync_single_workout(payload: Dict[str, Any], db: Session = Depends(get
         return {"status": "success", "workout_id": success}
 
     except Exception as e:
-        print(f"Single sync error: {e}")
-        import traceback
-        traceback.print_exc()
-        raise HTTPException(status_code=500, detail=str(e))
+        print(f"Error saving to Garmin: {e}")
+        return {"status": "error", "message": str(e)}
+
+@app.get("/api/user/training-plan/{email}")
+async def get_training_plan(email: str, db: Session = Depends(get_db)):
+    """Fetch the active training plan from database"""
+    plan = db.query(TrainingPlan).filter(
+        TrainingPlan.user_email == email,
+        TrainingPlan.is_active == 1
+    ).order_by(TrainingPlan.id.desc()).first()
+    
+    if not plan:
+        return {"status": "no_plan", "plan": None}
+    
+    return plan.plan_data
 
 @app.post("/api/user/analyze-compliance")
 async def analyze_compliance(payload: Dict[str, Any], db: Session = Depends(get_db)):
     email = payload.get("email")
     plan = payload.get("plan") # The current full plan
+    
+    if not plan or len(plan) == 0:
+        db_plan = db.query(TrainingPlan).filter(
+            TrainingPlan.user_email == email,
+            TrainingPlan.is_active == 1
+        ).order_by(TrainingPlan.id.desc()).first()
+        if db_plan:
+            plan = db_plan.plan_data.get("weeks", [])
+            print(f"DEBUG: Loaded plan from DB for {email} ({len(plan)} weeks)")
     
     print(f"DEBUG: analyze_compliance for {email}")
     user = db.query(User).filter(User.email == email).first()
@@ -511,20 +548,20 @@ async def analyze_compliance(payload: Dict[str, Any], db: Session = Depends(get_
         print(f"DEBUG: Garmin login failed for {email}")
         raise HTTPException(status_code=401, detail="Garmin login failed. Please check your credentials.")
 
-    # BRIDGE: Update Challenge Progress
-    try:
-        from challenge_logic import ChallengeLogic
-        cl = ChallengeLogic(db)
-        cl.update_challenge_progress(email, recent_activities)
-    except Exception as e:
-        print(f"DEBUG: Challenge progress update failed: {e}")
-    
     print(f"DEBUG: Found {len(recent_activities)} activities for {email}")
         
     cl = CoachLogic()
     analysis = cl.analyze_executed_activities(plan, recent_activities)
     print(f"DEBUG: Analysis complete. All feedback count: {len(analysis['all_activities_feedback'])}")
     
+    # Update challenge progress based on newly fetched activities
+    try:
+        from challenge_logic import ChallengeLogic
+        cl_logic = ChallengeLogic(db)
+        cl_logic.update_challenge_progress(email, recent_activities)
+    except Exception as e:
+        print(f"DEBUG: Error updating challenges: {e}")
+
     return {"status": "success", "analysis": analysis}
 
 # ==================== AI CHAT ENDPOINTS ====================

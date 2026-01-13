@@ -1,7 +1,7 @@
-
 import logging
 from garminconnect import Garmin
 import datetime
+from encryption import decrypt_password
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -10,7 +10,8 @@ logger = logging.getLogger(__name__)
 class GarminManager:
     def __init__(self, email, password, tokens=None):
         self.email = email
-        self.password = password
+        # Decrypt password if it looks like it's encrypted (or just pass through if plain)
+        self.password = decrypt_password(password)
         self.tokens = tokens
         self.client = None
         self.last_login_error = None
