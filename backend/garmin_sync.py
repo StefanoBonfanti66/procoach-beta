@@ -59,11 +59,13 @@ class GarminManager:
             
             # Set a more user-friendly error message if possible
             if "Cloudflare" in err_str or "403" in err_str:
-                self.last_login_error = "Accesso bloccato da protezione Garmin (Cloudflare). Riprova più tardi."
+                self.last_login_error = "Accesso bloccato (Cloudflare/403). I server di Render potrebbero essere temporaneamente bloccati da Garmin."
             elif "Invalid" in err_str or "Authentication" in err_str:
-                self.last_login_error = "Email o Password non corretti."
+                self.last_login_error = f"Email o Password non corretti (Dettaglio: {err_str})"
+            elif "MFA" in err_str or "multi-factor" in err_str.lower():
+                self.last_login_error = "Garmin richiede l'autenticazione a due fattori (MFA). Disabilitala o usa un token di sessione."
             else:
-                self.last_login_error = f"Errore login: {err_str}"
+                self.last_login_error = f"Errore login Garmin: {err_str}"
                 
             try:
                 with open("sync_error.log", "a") as f:
