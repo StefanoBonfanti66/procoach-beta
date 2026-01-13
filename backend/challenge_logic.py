@@ -68,10 +68,10 @@ class ChallengeLogic:
         self.seed_default_challenges()
         
         # Check if user already has active weekly challenges
-        active = self.db.query(UserChallenge).filter(
+        active = self.db.query(UserChallenge).join(Challenge, UserChallenge.challenge_id == Challenge.id).filter(
             UserChallenge.user_email == user_email,
             UserChallenge.status == "active",
-            UserChallenge.challenge_type == "weekly"
+            Challenge.challenge_type == "weekly"
         ).first() # Simplified check
         
         if not active:
