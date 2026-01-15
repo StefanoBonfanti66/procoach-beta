@@ -100,7 +100,11 @@ const Dashboard = () => {
 
     const handlePushToGarmin = async () => {
         const currentWeek = fullPlan ? fullPlan[currentWeekIdx] : null;
-        if (!userEmail || !currentWeek) return;
+        console.log("DEBUG: handlePushToGarmin called", { userEmail, currentWeek });
+        if (!userEmail || !currentWeek) {
+            console.warn("DEBUG: Missing email or week data", { userEmail, currentWeek });
+            return;
+        }
 
         setIsSyncingCalendar(true);
         try {

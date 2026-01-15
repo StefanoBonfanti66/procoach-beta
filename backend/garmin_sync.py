@@ -1,11 +1,17 @@
 import logging
 from garminconnect import Garmin
 import datetime
+import re
 from encryption import decrypt_password
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Module-level cache for Garmin metrics to avoid redundant API calls within short windows
+# Format: { email: { 'timestamp': dt, 'health': ..., 'activities': ... } }
+GARMIN_METRICS_CACHE = {}
+CACHE_TTL_MINUTES = 5
 
 class GarminManager:
     def __init__(self, email, password, tokens=None):
@@ -184,7 +190,6 @@ class GarminManager:
                             
                             # FALLBACK: Extract from Description if missing (e.g. "Run at 5:00/km" or "12.5 km/h")
                             if 'pace_ms' not in s_data and 'power_watts' not in s_data:
-                                import re
                                 desc = s_data.get('description', '')
                                 
                                 # 1. Try Pace (min/km)
@@ -264,41 +269,47 @@ class GarminManager:
                                     step["preferredEndConditionUnit"] = {"unitId": 2, "unitKey": "kilometer", "factor": 100000.0}
                                     
                             # Target application logic
-                            if 'pace_ms' in s_data:
-                                print(f"DEBUG: Applying Pace Target: {s_data['pace_ms']} m/s to step {current_order}")
-                                speed = float(s_data['pace_ms'])
+                            if s_data.get('pace_ms') is not None:
+                                try:
+                                    speed = float(s_data['pace_ms'])
+                                    print(f"DEBUG: Applying Pace Target: {speed} m/s to step {current_order}")
+                                except (TypeError, ValueError) as e:
+                                    print(f"WARN: Invalid pace_ms value: {s_data.get('pace_ms')} ({e}). Skipping target.")
+                                    speed = None
                                 
-                                # 1. Default Logic (applies to Running, and generic text-based pace)
-                                # Default to Pace Zone (Running matches Library behavior)
-                                step["targetType"] = {"workoutTargetTypeId": 6, "workoutTargetTypeKey": "pace.zone"}
-                                step["targetValueOne"] = round(speed * 0.95, 3)
-                                step["targetValueTwo"] = round(speed * 1.05, 3)
-                                
-                                # 2. Swim Specific Logic Override
-                                if sport_type.get('sportTypeKey') == 'swimming':
-                                    # Use pace.zone (ID 6) and swim.css.offset (ID 17)
-                                    step["targetType"] = {"workoutTargetTypeId": 6, "workoutTargetTypeKey": "pace.zone"}
-                                    step["secondaryTargetType"] = {"workoutTargetTypeId": 17, "workoutTargetTypeKey": "swim.css.offset"}
+                                if speed is not None:
                                     
-                                    # Calculate offset from reference CSS
-                                    ref_css = float(s_data.get('css_ms', speed))
-                                    if ref_css > 0:
-                                        step_sec_100 = 100.0 / speed
-                                        ref_sec_100 = 100.0 / ref_css
-                                        offset = round(step_sec_100 - ref_sec_100, 1)
-                                        step["secondaryTargetValueOne"] = offset
-                                    else:
-                                        step["secondaryTargetValueOne"] = 0.0
+                                    # 1. Default Logic (applies to Running, and generic text-based pace)
+                                    # Default to Pace Zone (Running matches Library behavior)
+                                    step["targetType"] = {"workoutTargetTypeId": 6, "workoutTargetTypeKey": "pace.zone"}
+                                    step["targetValueOne"] = round(speed * 0.95, 3)
+                                    step["targetValueTwo"] = round(speed * 1.05, 3)
+                                    
+                                    # 2. Swim Specific Logic Override
+                                    if sport_type.get('sportTypeKey') == 'swimming':
+                                        # Use pace.zone (ID 6) and swim.css.offset (ID 17)
+                                        step["targetType"] = {"workoutTargetTypeId": 6, "workoutTargetTypeKey": "pace.zone"}
+                                        step["secondaryTargetType"] = {"workoutTargetTypeId": 17, "workoutTargetTypeKey": "swim.css.offset"}
                                         
-                                    step["secondaryTargetValueTwo"] = 0.0
-                                    step["targetValueUnit"] = None
+                                        # Calculate offset from reference CSS
+                                        ref_css = float(s_data.get('css_ms') or speed)
+                                        if ref_css > 0:
+                                            step_sec_100 = 100.0 / speed
+                                            ref_sec_100 = 100.0 / ref_css
+                                            offset = round(step_sec_100 - ref_sec_100, 1)
+                                            step["secondaryTargetValueOne"] = offset
+                                        else:
+                                            step["secondaryTargetValueOne"] = 0.0
+                                            
+                                        step["secondaryTargetValueTwo"] = 0.0
+                                        step["targetValueUnit"] = None
 
-                                else:
-                                    step["targetType"] = {"workoutTargetTypeId": 6, "workoutTargetTypeKey": "speed.target"}
-                                
-                                # Dynamic range: +/- 5% around the target speed for THIS specific step
-                                step["targetValueOne"] = round(speed * 0.95, 3)
-                                step["targetValueTwo"] = round(speed * 1.05, 3)
+                                    else:
+                                        step["targetType"] = {"workoutTargetTypeId": 6, "workoutTargetTypeKey": "speed.target"}
+                                    
+                                    # Dynamic range: +/- 5% around the target speed for THIS specific step
+                                    step["targetValueOne"] = round(speed * 0.95, 3)
+                                    step["targetValueTwo"] = round(speed * 1.05, 3)
 
                             if 'power_watts' in s_data and sport_type['sportTypeKey'] == 'cycling':
                                 watts = int(s_data['power_watts'])
@@ -329,7 +340,6 @@ class GarminManager:
                 # Initial Call: Try to find Global Recovery Target in Name
                 g_rec_kmh = None
                 w_name = name # Use the 'name' parameter passed to create_and_schedule_workout
-                import re
                 match_g = re.search(r'rec(?:upero)?\s*@\s*(\d+(?:\.\d+)?)\s*km/h', w_name, re.IGNORECASE)
                 if match_g:
                     g_rec_kmh = float(match_g.group(1))
@@ -474,6 +484,12 @@ class GarminManager:
             elif isinstance(obj, list):
                 for i, v in enumerate(obj):
                     results.extend(find_string_in_dict(v, target_str, f"{path}[{i}]"))
+            # Save to Cache (only for standard 14 days fetch)
+            if days == 14:
+                if self.email not in GARMIN_METRICS_CACHE:
+                    GARMIN_METRICS_CACHE[self.email] = {'timestamp': now}
+                GARMIN_METRICS_CACHE[self.email]['activities'] = results
+            
             return results
 
         try:
@@ -814,9 +830,15 @@ class GarminManager:
             return None
 
     def get_health_metrics(self, target_date=None):
-        """
-        Scans Garmin data with a 'Score Hunter' to find the sleep score in any nested field.
-        """
+        # Check Cache
+        now = datetime.datetime.now()
+        cache = GARMIN_METRICS_CACHE.get(self.email, {})
+        if cache and 'health' in cache:
+            time_diff = (now - cache['timestamp']).total_seconds() / 60.0
+            if time_diff < CACHE_TTL_MINUTES:
+                print(f"DEBUG: Returning cached health metrics for {self.email} (age: {round(time_diff, 1)}m)")
+                return cache['health']
+
         if not self.login():
             return None
         
@@ -904,12 +926,28 @@ class GarminManager:
                 print(f"DEBUG: Error in hunter scan {d}: {e}")
 
         best_metrics["readiness_score"] = best_metrics["sleep_score"] or best_metrics["body_battery"]
+        
+        # Save to Cache
+        if self.email not in GARMIN_METRICS_CACHE:
+             GARMIN_METRICS_CACHE[self.email] = {'timestamp': now}
+        GARMIN_METRICS_CACHE[self.email]['health'] = best_metrics
+        GARMIN_METRICS_CACHE[self.email]['timestamp'] = now # Refresh timestamp
+        
         return best_metrics
 
     def get_recent_activities(self, days=14):
         """
         Fetches activities from the last X days.
         """
+        # Check Cache
+        now = datetime.datetime.now()
+        cache = GARMIN_METRICS_CACHE.get(self.email, {})
+        if cache and 'activities' in cache and days <= 14:
+             time_diff = (now - cache['timestamp']).total_seconds() / 60.0
+             if time_diff < CACHE_TTL_MINUTES:
+                 print(f"DEBUG: Returning cached recent activities for {self.email} (age: {round(time_diff, 1)}m)")
+                 return cache['activities']
+
         if not self.login():
             return None
         
@@ -982,6 +1020,13 @@ class GarminManager:
                     "anaerobic_te": act.get('anaerobicTrainingEffect'),
                     "v02_max_est": act.get('vO2MaxValue')
                 })
+            
+            # Save to Cache (only for standard 14 days or less)
+            if days <= 14:
+                if self.email not in GARMIN_METRICS_CACHE:
+                    GARMIN_METRICS_CACHE[self.email] = {'timestamp': now}
+                GARMIN_METRICS_CACHE[self.email]['activities'] = processed
+                GARMIN_METRICS_CACHE[self.email]['timestamp'] = now
             
             return processed
         except Exception as e:

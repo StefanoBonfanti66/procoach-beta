@@ -382,7 +382,8 @@ async def generate_plan(payload: Dict[str, str], db: Session = Depends(get_db)):
 async def sync_calendar(payload: Dict[str, Any], db: Session = Depends(get_db)):
     email = payload.get("email")
     week_data = payload.get("week_data")
-    print(f"DEBUG: Syncing calendar for {email}, week {week_data.get('week_number')}")
+    print(f"DEBUG: Syncing calendar for {email}")
+    print(f"DEBUG WEEK DATA: {week_data.get('week_number')} - Start Date: {week_data.get('start_date')}")
     
     user = db.query(User).filter(User.email == email).first()
     if not user or not user.hashed_password:
@@ -400,7 +401,17 @@ async def sync_calendar(payload: Dict[str, Any], db: Session = Depends(get_db)):
              
         # Week start date
         week_start_str = week_data.get("start_date")
-        week_start = datetime.date.fromisoformat(week_start_str)
+        if not week_start_str:
+             # Fallback: if missing, try to estimate as current week Monday
+             today = datetime.date.today()
+             week_start = today - datetime.timedelta(days=today.weekday())
+             print(f"WARNING: No start_date in week_data. Falling back to Monday of current week: {week_start}")
+        else:
+             try:
+                 week_start = datetime.date.fromisoformat(week_start_str)
+             except ValueError:
+                 print(f"ERROR: Invalid date format {week_start_str}. Falling back to today.")
+                 week_start = datetime.date.today()
         
         days_map = {"Mon": 0, "Tue": 1, "Wed": 2, "Thu": 3, "Fri": 4, "Sat": 5, "Sun": 6}
         
@@ -428,7 +439,7 @@ async def sync_calendar(payload: Dict[str, Any], db: Session = Depends(get_db)):
             
             description = f"Phase: {week_data.get('phase')}. Intensity: {workout.get('intensity')}."
             
-            print(f"Scheduling {activity_type} on {workout_date_str}")
+            print(f"Scheduling {activity_type} on {workout_date_str} (Name: {workout.get('activity')})")
             
             success = gm.create_and_schedule_workout(
                 name=workout.get('activity'),
@@ -439,7 +450,8 @@ async def sync_calendar(payload: Dict[str, Any], db: Session = Depends(get_db)):
                 steps=workout.get("steps"),
                 pool_length=user.pool_length or 25.0
             )
-            results.append({"day": p_day, "success": success})
+            print(f"DEBUG: Sync result for {p_day}: {success}")
+            results.append({"day": p_day, "success": bool(success)})
 
     except Exception as e:
         print(f"Sync error: {e}")
@@ -495,6 +507,9 @@ async def sync_single_workout(payload: Dict[str, Any], db: Session = Depends(get
             steps=steps, # Now reliably extracted
             pool_length=user.pool_length or 25.0
         )
+        if not success:
+             return {"status": "error", "message": "Failed to create or schedule workout in Garmin Connect. Check backend logs."}
+             
         return {"status": "success", "workout_id": success}
 
     except Exception as e:
@@ -628,9 +643,15 @@ async def chat_with_coach(request: ChatRequest, db: Session = Depends(get_db)):
                 # Continue without Garmin data - AI can still help
         
         # Try to get current training plan from user's stored plan
-        # (In a real app, you'd store the plan in DB. For now, we'll skip this)
-        training_plan = None
-        # TODO: Fetch from database if you store plans per user
+        # Fetch active training plan from database
+        training_plan = db.query(TrainingPlan).filter(
+            TrainingPlan.user_email == request.email,
+            TrainingPlan.is_active == 1
+        ).order_by(TrainingPlan.id.desc()).first()
+        
+        plan_data = training_plan.plan_data if training_plan else None
+        if plan_data:
+            print(f"DEBUG: Injecting active plan into chat context for {request.email}")
         
         # Get conversation history
         history = db.query(ChatMessage).filter(
@@ -649,7 +670,7 @@ async def chat_with_coach(request: ChatRequest, db: Session = Depends(get_db)):
             conversation_history,
             user_profile,
             recent_stats=recent_stats if recent_stats else None,
-            training_plan=training_plan
+            training_plan=plan_data
         )
         
         # Save user message

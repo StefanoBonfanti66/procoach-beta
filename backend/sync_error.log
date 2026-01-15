@@ -304,3 +304,34 @@ garth.exc.GarthHTTPError: Error in request: 400 Client Error: Bad Request for ur
 2026-01-13 14:07:05.346371 - Garmin login failed for stefano.bonfanti@libero.it: Login failed: Unexpected title: GARMIN Authentication Application
 2026-01-13 14:07:12.101921 - Garmin login failed for stefano.bonfanti@libero.it: Login failed: Unexpected title: GARMIN Authentication Application
 2026-01-13 14:07:14.151816 - Garmin login failed for stefano.bonfanti@libero.it: Login failed: Unexpected title: GARMIN Authentication Application
+2026-01-13 16:38:33.636621 - Error in pure dict workout creation: cannot access local variable 're' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 342, in create_and_schedule_workout
+    workout_steps = process_steps(steps, global_rec_kmh=g_rec_kmh)
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 232, in process_steps
+    match_sec = re.search(r'\b(\d+)\s*sec', s_data.get('description', ''), re.IGNORECASE)
+                ^^
+UnboundLocalError: cannot access local variable 're' where it is not associated with a value
+2026-01-13 16:39:06.591243 - Error in pure dict workout creation: cannot access local variable 're' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 342, in create_and_schedule_workout
+    workout_steps = process_steps(steps, global_rec_kmh=g_rec_kmh)
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 232, in process_steps
+    match_sec = re.search(r'\b(\d+)\s*sec', s_data.get('description', ''), re.IGNORECASE)
+                ^^
+UnboundLocalError: cannot access local variable 're' where it is not associated with a value
+2026-01-13 16:44:25.421521 - Error in pure dict workout creation: cannot access local variable 're' where it is not associated with a value
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 342, in create_and_schedule_workout
+    workout_steps = process_steps(steps, global_rec_kmh=g_rec_kmh)
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 232, in process_steps
+    match_sec = re.search(r'\b(\d+)\s*sec', s_data.get('description', ''), re.IGNORECASE)
+                ^^
+UnboundLocalError: cannot access local variable 're' where it is not associated with a value
+2026-01-13 16:44:52.403830 - Error in pure dict workout creation: float() argument must be a string or a real number, not 'NoneType'
+Traceback (most recent call last):
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 342, in create_and_schedule_workout
+    workout_steps = process_steps(steps, global_rec_kmh=g_rec_kmh)
+  File "C:\progetti_stefano\automations\garmin_connect\backend\garmin_sync.py", line 274, in process_steps
+    speed = float(s_data['pace_ms'])
+TypeError: float() argument must be a string or a real number, not 'NoneType'

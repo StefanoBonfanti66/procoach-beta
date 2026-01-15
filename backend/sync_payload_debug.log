@@ -11030,3 +11030,1806 @@
   "poolLength": null,
   "poolLengthUnit": null
 }
+
+--- FTP Builder (CYCLING) ---
+{
+  "workoutName": "FTP Builder",
+  "description": "AI Workout",
+  "sportType": {
+    "sportTypeId": 2,
+    "sportTypeKey": "cycling"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 2,
+        "sportTypeKey": "cycling"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento 12\u2032 @ 112W",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 720.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 97.0,
+          "targetValueTwo": 127.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Piramide Step 1 (4\u2032)",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 240.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 193.0,
+          "targetValueTwo": 223.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Recupero 1\u2032",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 60.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 4,
+          "description": "Piramide Step 2 (6\u2032)",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 360.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 193.0,
+          "targetValueTwo": 223.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 5,
+          "description": "Recupero 1\u2032",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 60.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 6,
+          "description": "Piramide Step 3 (8\u2032)",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 480.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 193.0,
+          "targetValueTwo": 223.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 7,
+          "description": "Recupero 1\u2032",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 60.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 8,
+          "description": "Piramide Step 4 (6\u2032)",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 360.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 193.0,
+          "targetValueTwo": 223.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 9,
+          "description": "Recupero 1\u2032",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 60.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 10,
+          "description": "Piramide Step 5 (4\u2032)",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 240.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 193.0,
+          "targetValueTwo": 223.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 11,
+          "description": "Defaticamento 9\u2032",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 540.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 87.0,
+          "targetValueTwo": 117.0
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 3180,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- Tempo Run (RUNNING) ---
+{
+  "workoutName": "Tempo Run",
+  "description": "Phase: BASE. Intensity: Moderate.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento 9\u2032",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 540.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 2.045,
+          "targetValueTwo": 2.26
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Fartlek Play",
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 7,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "2\u2032 Moderate",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 120.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 2.674,
+              "targetValueTwo": 2.955
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "2\u2032 Easy",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 120.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 2.202,
+              "targetValueTwo": 2.434
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 7.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento 6\u2032",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 360.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 1.887,
+          "targetValueTwo": 2.086
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 2580,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- Swim Tech & Drills (SWIMMING) ---
+{
+  "workoutName": "Swim Tech & Drills",
+  "description": "Phase: BASE. Intensity: Low.",
+  "sportType": {
+    "sportTypeId": 4,
+    "sportTypeKey": "swimming"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 4,
+        "sportTypeKey": "swimming"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento 400m",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 3,
+            "conditionTypeKey": "distance"
+          },
+          "endConditionValue": 400.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "pace.zone"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          },
+          "preferredEndConditionUnit": {
+            "unitId": 2,
+            "unitKey": "kilometer",
+            "factor": 100000.0
+          },
+          "targetValueOne": 0.567,
+          "targetValueTwo": 0.627,
+          "secondaryTargetType": {
+            "workoutTargetTypeId": 17,
+            "workoutTargetTypeKey": "swim.css.offset"
+          },
+          "secondaryTargetValueOne": 0.0,
+          "secondaryTargetValueTwo": 0.0,
+          "targetValueUnit": null
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Tech Block 7x[50+50]",
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 7,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "50m Drill (Sculling/Single Arm)",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "swim"
+              },
+              "endCondition": {
+                "conditionTypeId": 3,
+                "conditionTypeKey": "distance"
+              },
+              "endConditionValue": 50.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "pace.zone"
+              },
+              "childStepId": 1,
+              "strokeType": {
+                "strokeTypeId": 1,
+                "strokeTypeKey": "any_stroke"
+              },
+              "equipmentType": {
+                "equipmentTypeId": 0,
+                "equipmentTypeKey": "no_equipment"
+              },
+              "preferredEndConditionUnit": {
+                "unitId": 2,
+                "unitKey": "kilometer",
+                "factor": 100000.0
+              },
+              "targetValueOne": 0.532,
+              "targetValueTwo": 0.588,
+              "secondaryTargetType": {
+                "workoutTargetTypeId": 17,
+                "workoutTargetTypeKey": "swim.css.offset"
+              },
+              "secondaryTargetValueOne": 0.0,
+              "secondaryTargetValueTwo": 0.0,
+              "targetValueUnit": null
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "50m Perfect Form Swim",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "swim"
+              },
+              "endCondition": {
+                "conditionTypeId": 3,
+                "conditionTypeKey": "distance"
+              },
+              "endConditionValue": 50.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "pace.zone"
+              },
+              "childStepId": 1,
+              "strokeType": {
+                "strokeTypeId": 1,
+                "strokeTypeKey": "any_stroke"
+              },
+              "equipmentType": {
+                "equipmentTypeId": 0,
+                "equipmentTypeKey": "no_equipment"
+              },
+              "preferredEndConditionUnit": {
+                "unitId": 2,
+                "unitKey": "kilometer",
+                "factor": 100000.0
+              },
+              "targetValueOne": 0.638,
+              "targetValueTwo": 0.705,
+              "secondaryTargetType": {
+                "workoutTargetTypeId": 17,
+                "workoutTargetTypeKey": "swim.css.offset"
+              },
+              "secondaryTargetValueOne": 0.0,
+              "secondaryTargetValueTwo": 0.0,
+              "targetValueUnit": null
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 3,
+              "description": "20s Rest",
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 19.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "childStepId": 1,
+              "strokeType": {
+                "strokeTypeId": 1,
+                "strokeTypeKey": "any_stroke"
+              },
+              "equipmentType": {
+                "equipmentTypeId": 0,
+                "equipmentTypeKey": "no_equipment"
+              }
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 7.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento 250m",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 3,
+            "conditionTypeKey": "distance"
+          },
+          "endConditionValue": 250.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "pace.zone"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          },
+          "preferredEndConditionUnit": {
+            "unitId": 2,
+            "unitKey": "kilometer",
+            "factor": 100000.0
+          },
+          "targetValueOne": 0.532,
+          "targetValueTwo": 0.588,
+          "secondaryTargetType": {
+            "workoutTargetTypeId": 17,
+            "workoutTargetTypeKey": "swim.css.offset"
+          },
+          "secondaryTargetValueOne": 0.0,
+          "secondaryTargetValueTwo": 0.0,
+          "targetValueUnit": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 538,
+  "estimatedDistanceInMeters": 1350.0,
+  "estimateType": "DISTANCE_ESTIMATED",
+  "estimatedDistanceUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "poolLength": 25.0,
+  "poolLengthUnit": {
+    "unitId": 2,
+    "unitKey": "kilometer",
+    "factor": 100000.0
+  }
+}
+
+--- FTP Builder (CYCLING) ---
+{
+  "workoutName": "FTP Builder",
+  "description": "Phase: BASE. Intensity: High.",
+  "sportType": {
+    "sportTypeId": 2,
+    "sportTypeKey": "cycling"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 2,
+        "sportTypeKey": "cycling"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento 12\u2032 @ 112W",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 720.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 97.0,
+          "targetValueTwo": 127.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Piramide Step 1 (4\u2032)",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 240.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 193.0,
+          "targetValueTwo": 223.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Recupero 1\u2032",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 60.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 4,
+          "description": "Piramide Step 2 (6\u2032)",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 360.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 193.0,
+          "targetValueTwo": 223.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 5,
+          "description": "Recupero 1\u2032",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 60.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 6,
+          "description": "Piramide Step 3 (8\u2032)",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 480.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 193.0,
+          "targetValueTwo": 223.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 7,
+          "description": "Recupero 1\u2032",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 60.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 8,
+          "description": "Piramide Step 4 (6\u2032)",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 360.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 193.0,
+          "targetValueTwo": 223.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 9,
+          "description": "Recupero 1\u2032",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 60.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 10,
+          "description": "Piramide Step 5 (4\u2032)",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "interval"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 240.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 193.0,
+          "targetValueTwo": 223.0
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 11,
+          "description": "Defaticamento 9\u2032",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 540.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 87.0,
+          "targetValueTwo": 117.0
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 3180,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- Foundation Run (RUNNING) ---
+{
+  "workoutName": "Foundation Run",
+  "description": "Phase: BASE. Intensity: Low.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento 9\u2032",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 540.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 2.045,
+          "targetValueTwo": 2.26
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Fartlek Play",
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 7,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "2\u2032 Moderate",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 120.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 2.674,
+              "targetValueTwo": 2.955
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "2\u2032 Easy",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 120.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 2.202,
+              "targetValueTwo": 2.434
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 7.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento 6\u2032",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 360.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 1.887,
+          "targetValueTwo": 2.086
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 2580,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- Swim Threshold Set (SWIMMING) ---
+{
+  "workoutName": "Swim Threshold Set",
+  "description": "Phase: BASE. Intensity: High.",
+  "sportType": {
+    "sportTypeId": 4,
+    "sportTypeKey": "swimming"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 4,
+        "sportTypeKey": "swimming"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento 400m",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 3,
+            "conditionTypeKey": "distance"
+          },
+          "endConditionValue": 400.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "pace.zone"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          },
+          "preferredEndConditionUnit": {
+            "unitId": 2,
+            "unitKey": "kilometer",
+            "factor": 100000.0
+          },
+          "targetValueOne": 0.567,
+          "targetValueTwo": 0.627,
+          "secondaryTargetType": {
+            "workoutTargetTypeId": 17,
+            "workoutTargetTypeKey": "swim.css.offset"
+          },
+          "secondaryTargetValueOne": 0.0,
+          "secondaryTargetValueTwo": 0.0,
+          "targetValueUnit": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Piramde 50m",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "swim"
+          },
+          "endCondition": {
+            "conditionTypeId": 3,
+            "conditionTypeKey": "distance"
+          },
+          "endConditionValue": 50.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "pace.zone"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          },
+          "preferredEndConditionUnit": {
+            "unitId": 2,
+            "unitKey": "kilometer",
+            "factor": 100000.0
+          },
+          "targetValueOne": 0.744,
+          "targetValueTwo": 0.823,
+          "secondaryTargetType": {
+            "workoutTargetTypeId": 17,
+            "workoutTargetTypeKey": "swim.css.offset"
+          },
+          "secondaryTargetValueOne": 0.0,
+          "secondaryTargetValueTwo": 0.0,
+          "targetValueUnit": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Recupero 15s",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 15.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          }
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 4,
+          "description": "Piramde 100m",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "swim"
+          },
+          "endCondition": {
+            "conditionTypeId": 3,
+            "conditionTypeKey": "distance"
+          },
+          "endConditionValue": 100.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "pace.zone"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          },
+          "preferredEndConditionUnit": {
+            "unitId": 2,
+            "unitKey": "kilometer",
+            "factor": 100000.0
+          },
+          "targetValueOne": 0.744,
+          "targetValueTwo": 0.823,
+          "secondaryTargetType": {
+            "workoutTargetTypeId": 17,
+            "workoutTargetTypeKey": "swim.css.offset"
+          },
+          "secondaryTargetValueOne": 0.0,
+          "secondaryTargetValueTwo": 0.0,
+          "targetValueUnit": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 5,
+          "description": "Recupero 15s",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 15.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          }
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 6,
+          "description": "Piramde 150m",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "swim"
+          },
+          "endCondition": {
+            "conditionTypeId": 3,
+            "conditionTypeKey": "distance"
+          },
+          "endConditionValue": 150.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "pace.zone"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          },
+          "preferredEndConditionUnit": {
+            "unitId": 2,
+            "unitKey": "kilometer",
+            "factor": 100000.0
+          },
+          "targetValueOne": 0.744,
+          "targetValueTwo": 0.823,
+          "secondaryTargetType": {
+            "workoutTargetTypeId": 17,
+            "workoutTargetTypeKey": "swim.css.offset"
+          },
+          "secondaryTargetValueOne": 0.0,
+          "secondaryTargetValueTwo": 0.0,
+          "targetValueUnit": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 7,
+          "description": "Recupero 15s",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 15.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          }
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 8,
+          "description": "Piramde 100m",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "swim"
+          },
+          "endCondition": {
+            "conditionTypeId": 3,
+            "conditionTypeKey": "distance"
+          },
+          "endConditionValue": 100.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "pace.zone"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          },
+          "preferredEndConditionUnit": {
+            "unitId": 2,
+            "unitKey": "kilometer",
+            "factor": 100000.0
+          },
+          "targetValueOne": 0.744,
+          "targetValueTwo": 0.823,
+          "secondaryTargetType": {
+            "workoutTargetTypeId": 17,
+            "workoutTargetTypeKey": "swim.css.offset"
+          },
+          "secondaryTargetValueOne": 0.0,
+          "secondaryTargetValueTwo": 0.0,
+          "targetValueUnit": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 9,
+          "description": "Recupero 15s",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 15.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          }
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 10,
+          "description": "Piramde 50m",
+          "stepType": {
+            "stepTypeId": 3,
+            "stepTypeKey": "swim"
+          },
+          "endCondition": {
+            "conditionTypeId": 3,
+            "conditionTypeKey": "distance"
+          },
+          "endConditionValue": 50.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "pace.zone"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          },
+          "preferredEndConditionUnit": {
+            "unitId": 2,
+            "unitKey": "kilometer",
+            "factor": 100000.0
+          },
+          "targetValueOne": 0.744,
+          "targetValueTwo": 0.823,
+          "secondaryTargetType": {
+            "workoutTargetTypeId": 17,
+            "workoutTargetTypeKey": "swim.css.offset"
+          },
+          "secondaryTargetValueOne": 0.0,
+          "secondaryTargetValueTwo": 0.0,
+          "targetValueUnit": null
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 11,
+          "description": "Recupero 15s",
+          "stepType": {
+            "stepTypeId": 4,
+            "stepTypeKey": "recovery"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 15.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          }
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 12,
+          "description": "Defaticamento 250m",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 3,
+            "conditionTypeKey": "distance"
+          },
+          "endConditionValue": 250.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "pace.zone"
+          },
+          "childStepId": null,
+          "strokeType": {
+            "strokeTypeId": 1,
+            "strokeTypeKey": "any_stroke"
+          },
+          "equipmentType": {
+            "equipmentTypeId": 0,
+            "equipmentTypeKey": "no_equipment"
+          },
+          "preferredEndConditionUnit": {
+            "unitId": 2,
+            "unitKey": "kilometer",
+            "factor": 100000.0
+          },
+          "targetValueOne": 0.532,
+          "targetValueTwo": 0.588,
+          "secondaryTargetType": {
+            "workoutTargetTypeId": 17,
+            "workoutTargetTypeKey": "swim.css.offset"
+          },
+          "secondaryTargetValueOne": 0.0,
+          "secondaryTargetValueTwo": 0.0,
+          "targetValueUnit": null
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 405,
+  "estimatedDistanceInMeters": 1100.0,
+  "estimateType": "DISTANCE_ESTIMATED",
+  "estimatedDistanceUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "poolLength": 25.0,
+  "poolLengthUnit": {
+    "unitId": 2,
+    "unitKey": "kilometer",
+    "factor": 100000.0
+  }
+}
+
+--- Iron Ride (CYCLING) ---
+{
+  "workoutName": "Iron Ride",
+  "description": "Phase: BASE. Intensity: Low.",
+  "sportType": {
+    "sportTypeId": 2,
+    "sportTypeKey": "cycling"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 2,
+        "sportTypeKey": "cycling"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento 12\u2032 @ 112W",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 720.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 97.0,
+          "targetValueTwo": 127.0
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Endurance with 1' Surges",
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 2,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Endurance Pace",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 840.0,
+              "targetType": {
+                "workoutTargetTypeId": 2,
+                "workoutTargetTypeKey": "power.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 131.0,
+              "targetValueTwo": 161.0
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "1\u2032 Surge Tempo",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 2,
+                "workoutTargetTypeKey": "power.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 178.0,
+              "targetValueTwo": 208.0
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 2.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento 9\u2032",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 540.0,
+          "targetType": {
+            "workoutTargetTypeId": 2,
+            "workoutTargetTypeKey": "power.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 87.0,
+          "targetValueTwo": 117.0
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 3060,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
+
+--- Endurance Miles (RUNNING) ---
+{
+  "workoutName": "Endurance Miles",
+  "description": "Phase: BASE. Intensity: Moderate.",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 1,
+          "description": "Riscaldamento 12\u2032",
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 720.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 2.045,
+          "targetValueTwo": 2.26
+        },
+        {
+          "type": "RepeatGroupDTO",
+          "stepId": null,
+          "stepOrder": 2,
+          "description": "Endurance with 1' Surges",
+          "stepType": {
+            "stepTypeId": 6,
+            "stepTypeKey": "repeat"
+          },
+          "childStepId": 1,
+          "numberOfIterations": 2,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 1,
+              "description": "Endurance Pace",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 840.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 2.359,
+              "targetValueTwo": 2.608
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepId": null,
+              "stepOrder": 2,
+              "description": "1\u2032 Surge Tempo",
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval"
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 60.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "speed.target"
+              },
+              "childStepId": 1,
+              "targetValueOne": 2.831,
+              "targetValueTwo": 3.129
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 2.0,
+          "skipLastRestStep": true,
+          "smartRepeat": false
+        },
+        {
+          "type": "ExecutableStepDTO",
+          "stepId": null,
+          "stepOrder": 3,
+          "description": "Defaticamento 9\u2032",
+          "stepType": {
+            "stepTypeId": 2,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 540.0,
+          "targetType": {
+            "workoutTargetTypeId": 6,
+            "workoutTargetTypeKey": "speed.target"
+          },
+          "childStepId": null,
+          "targetValueOne": 1.887,
+          "targetValueTwo": 2.086
+        }
+      ],
+      "poolLength": null,
+      "poolLengthUnit": null
+    }
+  ],
+  "estimatedDurationInSecs": 3060,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": null,
+  "poolLength": null,
+  "poolLengthUnit": null
+}
