@@ -14,3 +14,4 @@ httpx
 email-validator
 openai
 google-generativeai
+pytest
